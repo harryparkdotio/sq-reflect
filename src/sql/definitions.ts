@@ -20,3 +20,8 @@ export interface EnumDefinition {
   schema?: string;
   values: any[];
 }
+
+export interface RawEnumDefinition {
+  name: string;
+  values: any[];
+}
