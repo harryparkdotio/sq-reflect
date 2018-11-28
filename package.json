@@ -13,12 +13,17 @@
     "lint": "yarn lint:code && yarn lint:prettier",
     "lint:code": "tslint -t codeFrame '{src,test}/**/*.ts'",
     "lint:prettier": "prettier --list-different '{src,test}/**/*.ts' '*.{json,js,md}'",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:unit": "jest test/unit",
+    "test:integration": "jest test/integration"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pg": "^7.6.1"
+  },
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
+    "@types/pg": "^7.4.11",
     "codecov": "^3.1.0",
     "husky": "^1.2.0",
     "jest": "^23.6.0",
