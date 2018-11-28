@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "allowUnreachableCode": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
     "removeComments": true,
-    "preserveConstEnums": true,
     "noEmit": true,
     "skipLibCheck": true,
     "lib": ["es2018"],
