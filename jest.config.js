@@ -1,11 +1,25 @@
+const baseConfig = {
+  transform: {
+    '^.+\\.ts$': 'ts-jest',
+  },
+  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
+  modulePathIgnorePatterns: ['<rootDir>/dist'],
+};
+
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.ts'],
   coverageReporters: ['lcov', 'text-summary'],
-  moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  modulePathIgnorePatterns: ['<rootDir>/dist'],
-  transform: {
-    '^.+\\.ts$': 'ts-jest',
-  },
-  testRegex: '/test/specs/.*\\.spec\\.ts$',
+  projects: [
+    {
+      displayName: 'unit',
+      testRegex: '/test/unit/.*\\.spec\\.ts$',
+      ...baseConfig,
+    },
+    {
+      displayName: 'integration',
+      testRegex: '/test/integration/.*\\.spec\\.ts$',
+      ...baseConfig,
+    },
+  ],
 };

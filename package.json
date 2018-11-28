@@ -13,7 +13,9 @@
     "lint": "yarn lint:code && yarn lint:prettier",
     "lint:code": "tslint -t codeFrame '{src,test}/**/*.ts'",
     "lint:prettier": "prettier --list-different '{src,test}/**/*.ts' '*.{json,js,md}'",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:unit": "jest test/unit",
+    "test:integration": "jest test/integration"
   },
   "dependencies": {
     "pg": "^7.6.1"
