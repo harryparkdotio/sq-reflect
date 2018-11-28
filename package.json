@@ -5,7 +5,45 @@
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
   "author": "Harry Park <harry@harrypark.io>",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "postbuild": "cp package.json dist/ && cp readme.md dist/ && cp license dist/",
+    "prettier": "prettier --write '{src,test}/**/*.ts' '*.{json,js,md}'",
+    "cover": "codecov",
+    "lint": "yarn lint:code && yarn lint:prettier",
+    "lint:code": "tslint -t codeFrame '{src,test}/**/*.ts'",
+    "lint:prettier": "prettier --list-different '{src,test}/**/*.ts' '*.{json,js,md}'",
+    "test": "jest --runInBand"
+  },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.10",
+    "codecov": "^3.1.0",
+    "husky": "^1.2.0",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.2",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint -t codeFrame",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,js,md,yml}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }
