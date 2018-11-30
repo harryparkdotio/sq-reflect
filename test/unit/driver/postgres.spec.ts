@@ -9,7 +9,6 @@ describe('Postgres', () => {
     it('should create new instance of pg.Client', () => {
       const connectionString = '';
 
-      // tslint:disable-next-line:no-unused-expression
       new Postgres(connectionString);
 
       expect(Client).toHaveBeenCalledWith(connectionString);
@@ -44,6 +43,8 @@ describe('Postgres', () => {
 
   describe('query', () => {
     it('should call pg.Client.query', async () => {
+      (Client.prototype.query as jest.Mock).mockResolvedValue({ rows: [] });
+
       const connectionString = '';
       const db = new Postgres(connectionString);
 

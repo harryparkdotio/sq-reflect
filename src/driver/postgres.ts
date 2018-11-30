@@ -18,6 +18,6 @@ export class Postgres implements Driver {
   }
 
   async query(sql: string, params?: any[]) {
-    return await this.client.query(sql, params);
+    return await this.client.query(sql, params).then(res => res.rows);
   }
 }

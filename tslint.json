@@ -9,6 +9,7 @@
     "object-literal-sort-keys": false,
     "only-arrow-functions": false,
     "ordered-imports": [true, { "grouped-imports": true }],
-    "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"]
+    "variable-name": [true, "check-format", "allow-leading-underscore", "allow-pascal-case"],
+    "no-unused-expression": false
   }
 }
