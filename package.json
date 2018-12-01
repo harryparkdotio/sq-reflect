@@ -18,9 +18,11 @@
     "test:integration": "jest test/integration"
   },
   "dependencies": {
+    "dedent": "^0.7.0",
     "pg": "^7.6.1"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "@types/jest": "^23.3.9",
     "@types/node": "^10.12.10",
     "@types/pg": "^7.4.11",
