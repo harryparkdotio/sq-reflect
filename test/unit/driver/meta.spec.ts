@@ -109,7 +109,7 @@ describe('Meta', () => {
             type: {
               sql: 'enum_user_status',
               alt: null,
-              type: undefined,
+              type: 'any',
               schema: 'public',
             },
           },

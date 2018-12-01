@@ -2,7 +2,7 @@ export interface TypeDefinition {
   sql: string;
   alt: string | null;
   schema: string;
-  type?: string;
+  type: string;
 }
 
 export interface ColumnDefinition {

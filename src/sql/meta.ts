@@ -95,7 +95,7 @@ export class Meta {
   }
 
   private mapType(type: RawTypeDefinition): TypeDefinition {
-    const typeMap: Partial<TypeMap> = typeMaps.find(t => t.types.includes(type.type)) || {};
+    const typeMap: Partial<TypeMap> = typeMaps.find(t => t.types.includes(type.type)) || { type: 'any' };
 
     return {
       sql: type.type,
