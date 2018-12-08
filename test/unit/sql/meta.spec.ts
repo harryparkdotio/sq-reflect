@@ -95,8 +95,8 @@ describe('Meta', () => {
         columns: [
           {
             name: 'id',
-            nullable: false,
             type: {
+              nullable: false,
               sql: 'int4',
               alt: 'integer',
               type: 'number',
@@ -105,11 +105,11 @@ describe('Meta', () => {
           },
           {
             name: 'status',
-            nullable: false,
             type: {
+              nullable: false,
               sql: 'enum_user_status',
               alt: null,
-              type: 'any',
+              type: null,
               schema: 'public',
             },
           },
