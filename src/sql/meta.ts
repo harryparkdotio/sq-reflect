@@ -2,16 +2,14 @@ import * as dedent from 'dedent';
 
 import { Driver } from '../driver/interfaces';
 
-import { TypeMap, typeMaps } from './types';
+import { typeMaps } from './types';
 
 import {
   ColumnDefinition,
   EnumDefinition,
   RawEnumDefinition,
   RawTableDefinition,
-  RawTypeDefinition,
   TableDefinition,
-  TypeDefinition,
 } from './definitions';
 
 interface BaseMetaOptions {
@@ -84,24 +82,14 @@ export class Meta {
       schema: options.schema,
       columns: definition.columns.map<ColumnDefinition>(columnDefinition => ({
         name: columnDefinition.name,
-        nullable: columnDefinition.nullable,
-        type: this.mapType({
+        type: {
           alt: columnDefinition.alt,
-          type: columnDefinition.type,
+          sql: columnDefinition.type,
+          nullable: columnDefinition.nullable,
+          type: (typeMaps.find(t => t.types.includes(columnDefinition.type)) || { type: null }).type,
           schema: columnDefinition.typeSchema,
-        }),
+        },
       })),
     }));
-  }
-
-  private mapType(type: RawTypeDefinition): TypeDefinition {
-    const typeMap: Partial<TypeMap> = typeMaps.find(t => t.types.includes(type.type)) || { type: 'any' };
-
-    return {
-      sql: type.type,
-      alt: type.alt,
-      schema: type.schema,
-      type: typeMap.type,
-    };
   }
 }

@@ -1,13 +1,13 @@
 export interface TypeDefinition {
   sql: string;
   alt: string | null;
+  nullable: boolean;
   schema: string;
   type: string;
 }
 
 export interface ColumnDefinition {
   name: string;
-  nullable: boolean;
   type: TypeDefinition;
 }
 
@@ -25,6 +25,7 @@ export interface EnumDefinition {
 
 export interface RawTypeDefinition {
   alt: string | null;
+  nullable: boolean;
   type: string;
   schema: string;
 }

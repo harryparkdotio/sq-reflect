@@ -67,8 +67,8 @@ describe('Meta', () => {
         columns: [
           {
             name: 'id',
-            nullable: false,
             type: {
+              nullable: false,
               type: 'number',
               sql: 'int4',
               alt: 'integer',
@@ -77,8 +77,8 @@ describe('Meta', () => {
           },
           {
             name: 'created_at',
-            nullable: true,
             type: {
+              nullable: true,
               type: 'Date',
               schema: 'pg_catalog',
               sql: 'timestamp',
@@ -87,9 +87,9 @@ describe('Meta', () => {
           },
           {
             name: 'status',
-            nullable: true,
             type: {
-              type: 'any',
+              nullable: true,
+              type: null,
               sql: 'enum_user_status',
               alt: null,
               schema: 'public',
