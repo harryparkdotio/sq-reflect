@@ -1,4 +1,4 @@
-import { source } from 'common-tags';
+import { inlineLists, source } from 'common-tags';
 
 import { EnumDefinition, TableDefinition, TypeDefinition } from '../sql/definitions';
 import { Transform } from '../transform';
@@ -7,15 +7,21 @@ import { NamingStrategy, PassiveNamingStrategy } from './naming-strategy';
 
 export type CodeOptions = Partial<{
   namingStrategy: NamingStrategy;
+  emitMetadata: boolean;
 }>;
 
 export class Code {
   private readonly ns: NamingStrategy;
   private readonly definitions: string[];
+  private opt: { meta: boolean };
 
   constructor(options: CodeOptions = {}) {
     this.ns = options.namingStrategy || new PassiveNamingStrategy();
     this.definitions = [];
+
+    this.opt = {
+      meta: options.emitMetadata || false,
+    };
   }
 
   define(type: string): void {
@@ -40,12 +46,14 @@ export class Code {
       type: string;
       prop: string;
       ref: string;
+      meta: string;
     }
 
     const cols = definition.columns.map<Cols>(col => ({
       type: this.type(col.type),
       prop: this.ns.property(col.name),
       ref: Transform.reserved(this.ns.type(col.name)),
+      meta: col.type.sql,
     }));
 
     return source`
@@ -54,7 +62,14 @@ export class Code {
       }
 
       export interface ${_interface} {
-        ${cols.map(col => `${col.prop}: ${_namespace}.${col.ref};`)}
+        ${[].concat(
+          ...cols.map(col =>
+            [
+              `${this.opt.meta && col.meta ? this.meta({ type: col.meta }) : ''}`,
+              `${col.prop}: ${_namespace}.${col.ref};`,
+            ].filter(elem => elem)
+          )
+        )}
       }
     `;
   }
@@ -67,5 +82,10 @@ export class Code {
     definition.nullable && types.push('null');
 
     return types.join(' | ');
+  }
+
+  meta(metadata: { [doc: string]: any }) {
+    const meta = Object.keys(metadata);
+    return inlineLists`/** ${meta.map(m => `@${m} ${metadata[m]}`)} */`;
   }
 }
