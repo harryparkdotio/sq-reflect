@@ -51,76 +51,78 @@ const definition: TableDefinition = {
 };
 
 describe('table', () => {
-  it('should return table source', () => {
-    const code = new Code();
+  describe('source', () => {
+    it('should return table source', () => {
+      const code = new Code();
 
-    code.define('user_status');
+      code.define('user_status');
 
-    const source = code.table(definition);
+      const source = code.table(definition);
 
-    expect(source).toBe(dedent`
-      export namespace users_fields {
-        export type id = number;
-        export type first_name = string | null;
-        export type Status = user_status;
-        export type exists = any;
-      }
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type Status = user_status;
+          export type exists = any;
+        }
+  
+        export interface users {
+          id: users_fields.id;
+          first_name: users_fields.first_name;
+          Status: users_fields.Status;
+          exists: users_fields.exists;
+        }
+      `);
+    });
 
-      export interface users {
-        id: users_fields.id;
-        first_name: users_fields.first_name;
-        Status: users_fields.Status;
-        exists: users_fields.exists;
-      }
-    `);
-  });
+    it('should return enum source using SnakeCaseNamingStrategy', () => {
+      const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
-  it('should return enum source using SnakeCaseNamingStrategy', () => {
-    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
+      code.define('user_status');
 
-    code.define('user_status');
+      const source = code.table(definition);
 
-    const source = code.table(definition);
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type status = user_status;
+          export type exists = any;
+        }
+  
+        export interface users {
+          id: users_fields.id;
+          first_name: users_fields.first_name;
+          status: users_fields.status;
+          exists: users_fields.exists;
+        }
+      `);
+    });
 
-    expect(source).toBe(dedent`
-      export namespace users_fields {
-        export type id = number;
-        export type first_name = string | null;
-        export type status = user_status;
-        export type exists = any;
-      }
+    it('should return enum source using CamelCaseNamingStrategy', () => {
+      const code = new Code({ namingStrategy: new CamelCaseNamingStrategy() });
 
-      export interface users {
-        id: users_fields.id;
-        first_name: users_fields.first_name;
-        status: users_fields.status;
-        exists: users_fields.exists;
-      }
-    `);
-  });
+      code.define('user_status');
 
-  it('should return enum source using CamelCaseNamingStrategy', () => {
-    const code = new Code({ namingStrategy: new CamelCaseNamingStrategy() });
+      const source = code.table(definition);
 
-    code.define('user_status');
-
-    const source = code.table(definition);
-
-    expect(source).toBe(dedent`
-      export namespace UsersFields {
-        export type id = number;
-        export type firstName = string | null;
-        export type status = UserStatus;
-        export type exists = any;
-      }
-
-      export interface Users {
-        id: UsersFields.id;
-        firstName: UsersFields.firstName;
-        status: UsersFields.status;
-        exists: UsersFields.exists;
-      }
-    `);
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type firstName = string | null;
+          export type status = UserStatus;
+          export type exists = any;
+        }
+  
+        export interface Users {
+          id: UsersFields.id;
+          firstName: UsersFields.firstName;
+          status: UsersFields.status;
+          exists: UsersFields.exists;
+        }
+      `);
+    });
   });
 
   it('should transform table name if reserved keyword', () => {
@@ -228,5 +230,91 @@ describe('table', () => {
         field: users_fields.field;
       }
     `);
+  });
+
+  describe('metadata', () => {
+    it('should return table source with metadata', () => {
+      const code = new Code({ emitMetadata: true });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type Status = user_status;
+          export type exists = any;
+        }
+
+        export interface users {
+          /** @type int4 */
+          id: users_fields.id;
+          /** @type varchar */
+          first_name: users_fields.first_name;
+          /** @type user_status */
+          Status: users_fields.Status;
+          /** @type user_exists */
+          exists: users_fields.exists;
+        }
+      `);
+    });
+
+    it('should return table source with metadata using SnakeCaseNamingStrategy', () => {
+      const code = new Code({ emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type status = user_status;
+          export type exists = any;
+        }
+
+        export interface users {
+          /** @type int4 */
+          id: users_fields.id;
+          /** @type varchar */
+          first_name: users_fields.first_name;
+          /** @type user_status */
+          status: users_fields.status;
+          /** @type user_exists */
+          exists: users_fields.exists;
+        }
+      `);
+    });
+
+    it('should return table source with metadata using CamelCaseNamingStrategy', () => {
+      const code = new Code({ emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type firstName = string | null;
+          export type status = UserStatus;
+          export type exists = any;
+        }
+
+        export interface Users {
+          /** @type int4 */
+          id: UsersFields.id;
+          /** @type varchar */
+          firstName: UsersFields.firstName;
+          /** @type user_status */
+          status: UsersFields.status;
+          /** @type user_exists */
+          exists: UsersFields.exists;
+        }
+      `);
+    });
   });
 });
