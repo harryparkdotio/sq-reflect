@@ -40,4 +40,12 @@ describe('PassiveNamingStrategy', () => {
       expect(new PassiveNamingStrategy().property(text)).toBe(text);
     });
   });
+
+  describe('udt', () => {
+    it('should return input', () => {
+      const text = 'udt';
+
+      expect(new PassiveNamingStrategy().udt(text)).toBe(text);
+    });
+  });
 });

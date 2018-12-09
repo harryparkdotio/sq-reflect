@@ -48,4 +48,13 @@ describe('CamelCaseNamingStrategy', () => {
       expect(Transform.camel).toHaveBeenCalledWith(text);
     });
   });
+
+  describe('udt', () => {
+    it('should call Transform.pascal', () => {
+      const text = 'udt';
+
+      new CamelCaseNamingStrategy().udt(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
+    });
+  });
 });

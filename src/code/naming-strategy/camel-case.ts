@@ -22,4 +22,8 @@ export class CamelCaseNamingStrategy implements NamingStrategy {
   property(name: string) {
     return Transform.camel(name);
   }
+
+  udt(name: string) {
+    return Transform.pascal(name);
+  }
 }

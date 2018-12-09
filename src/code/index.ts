@@ -11,9 +11,15 @@ export type CodeOptions = Partial<{
 
 export class Code {
   private readonly ns: NamingStrategy;
+  private readonly definitions: string[];
 
   constructor(options: CodeOptions = {}) {
     this.ns = options.namingStrategy || new PassiveNamingStrategy();
+    this.definitions = [];
+  }
+
+  define(type: string): void {
+    this.definitions.push(type);
   }
 
   enum(definition: EnumDefinition) {
@@ -54,8 +60,12 @@ export class Code {
   }
 
   type(definition: TypeDefinition) {
-    const types = [definition.type || 'any', definition.nullable && 'null'];
+    const udt = !definition.type && this.definitions.find(def => def === definition.sql);
 
-    return types.filter(type => type).join(' | ');
+    const types = [definition.type || (udt && this.ns.udt(udt)) || 'any'];
+
+    definition.nullable && types.push('null');
+
+    return types.join(' | ');
   }
 }
