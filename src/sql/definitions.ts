@@ -4,6 +4,7 @@ export interface TypeDefinition {
   nullable: boolean;
   schema: string;
   type: string;
+  default: string | null;
 }
 
 export interface ColumnDefinition {
@@ -23,19 +24,13 @@ export interface EnumDefinition {
   values: any[];
 }
 
-export interface RawTypeDefinition {
-  alt: string | null;
-  nullable: boolean;
-  type: string;
-  schema: string;
-}
-
 export interface RawColumnDefinition {
   name: string;
   nullable: boolean;
   type: string;
   alt: string | null;
   typeSchema: string;
+  default: string | null;
 }
 
 export interface RawTableDefinition {

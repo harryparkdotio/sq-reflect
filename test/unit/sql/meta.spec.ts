@@ -73,6 +73,7 @@ describe('Meta', () => {
               typeSchema: 'pg_catalog',
               nullable: false,
               alt: 'integer',
+              default: null,
             },
             {
               name: 'status',
@@ -80,6 +81,7 @@ describe('Meta', () => {
               type: 'enum_user_status',
               nullable: false,
               typeSchema: 'public',
+              default: null,
             },
           ],
         },
@@ -101,6 +103,7 @@ describe('Meta', () => {
               alt: 'integer',
               type: 'number',
               schema: 'pg_catalog',
+              default: null,
             },
           },
           {
@@ -111,6 +114,7 @@ describe('Meta', () => {
               alt: null,
               type: null,
               schema: 'public',
+              default: null,
             },
           },
         ],
@@ -130,6 +134,7 @@ describe('Meta', () => {
               typeSchema: 'pg_catalog',
               nullable: false,
               alt: 'integer',
+              default: null,
             },
             {
               name: 'status',
@@ -137,6 +142,7 @@ describe('Meta', () => {
               type: 'enum_user_status',
               nullable: false,
               typeSchema: 'public',
+              default: null,
             },
           ],
         },

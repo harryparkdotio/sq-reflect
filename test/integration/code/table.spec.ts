@@ -94,7 +94,9 @@ describe('table', () => {
 
     it('should return table source using CamelCaseNamingStrategy', async () => {
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
@@ -124,7 +126,9 @@ describe('table', () => {
   describe('metadata', () => {
     it('should return table source with metadata', async () => {
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
@@ -145,7 +149,7 @@ describe('table', () => {
         export interface users {
           /** @type int4 */
           id: users_fields.id;
-          /** @type timestamp */
+          /** @type timestamp @default now() */
           created_at: users_fields.created_at;
           /** @type enum_user_status */
           status: users_fields.status;
@@ -155,7 +159,9 @@ describe('table', () => {
 
     it('should return table source with metadata using SnakeCaseNamingStrategy', async () => {
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
@@ -176,7 +182,7 @@ describe('table', () => {
         export interface users {
           /** @type int4 */
           id: users_fields.id;
-          /** @type timestamp */
+          /** @type timestamp @default now() */
           created_at: users_fields.created_at;
           /** @type enum_user_status */
           status: users_fields.status;
@@ -186,7 +192,9 @@ describe('table', () => {
 
     it('should return table source with metadata using CamelCaseNamingStrategy', async () => {
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
@@ -207,7 +215,7 @@ describe('table', () => {
         export interface Users {
           /** @type int4 */
           id: UsersFields.id;
-          /** @type timestamp */
+          /** @type timestamp @default now() */
           createdAt: UsersFields.createdAt;
           /** @type enum_user_status */
           status: UsersFields.status;
