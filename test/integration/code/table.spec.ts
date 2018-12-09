@@ -28,14 +28,19 @@ describe('table', () => {
     await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
 
     const tables = await meta.Tables();
+    const enums = await meta.Enums();
 
-    const source = new Code().table(tables[0]);
+    const code = new Code();
+
+    code.define(enums[0].name);
+
+    const source = code.table(tables[0]);
 
     expect(source).toBe(dedent`
       export namespace users_fields {
         export type id = number;
         export type created_at = Date | null;
-        export type status = any | null;
+        export type status = enum_user_status | null;
       }
 
       export interface users {
@@ -52,13 +57,19 @@ describe('table', () => {
 
     const tables = await meta.Tables();
 
-    const source = new Code({ namingStrategy: new SnakeCaseNamingStrategy() }).table(tables[0]);
+    const enums = await meta.Enums();
+
+    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
+
+    code.define(enums[0].name);
+
+    const source = code.table(tables[0]);
 
     expect(source).toBe(dedent`
       export namespace users_fields {
         export type id = number;
         export type created_at = Date | null;
-        export type status = any | null;
+        export type status = enum_user_status | null;
       }
 
       export interface users {
@@ -74,14 +85,19 @@ describe('table', () => {
     await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
 
     const tables = await meta.Tables();
+    const enums = await meta.Enums();
 
-    const source = new Code({ namingStrategy: new CamelCaseNamingStrategy() }).table(tables[0]);
+    const code = new Code({ namingStrategy: new CamelCaseNamingStrategy() });
+
+    code.define(enums[0].name);
+
+    const source = code.table(tables[0]);
 
     expect(source).toBe(dedent`
       export namespace UsersFields {
         export type id = number;
         export type createdAt = Date | null;
-        export type status = any | null;
+        export type status = EnumUserStatus | null;
       }
 
       export interface Users {

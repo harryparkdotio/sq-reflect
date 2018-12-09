@@ -20,4 +20,8 @@ export class PassiveNamingStrategy implements NamingStrategy {
   property(name: string) {
     return name;
   }
+
+  udt(name: string) {
+    return name;
+  }
 }

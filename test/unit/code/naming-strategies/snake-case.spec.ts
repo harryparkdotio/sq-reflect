@@ -48,4 +48,13 @@ describe('SnakeCaseNamingStrategy', () => {
       expect(Transform.snake).toHaveBeenCalledWith(text);
     });
   });
+
+  describe('udt', () => {
+    it('should call Transform.snake', () => {
+      const text = 'udt';
+
+      new SnakeCaseNamingStrategy().udt(text);
+      expect(Transform.snake).toHaveBeenCalledWith(text);
+    });
+  });
 });

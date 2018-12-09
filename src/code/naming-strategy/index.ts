@@ -4,6 +4,7 @@ export interface NamingStrategy {
   type(name: string): string;
   interface(name: string): string;
   property(name: string): string;
+  udt(name: string): string;
 }
 
 export { CamelCaseNamingStrategy } from './camel-case';

@@ -22,4 +22,8 @@ export class SnakeCaseNamingStrategy implements NamingStrategy {
   property(name: string) {
     return Transform.snake(name);
   }
+
+  udt(name: string) {
+    return Transform.snake(name);
+  }
 }

@@ -54,13 +54,15 @@ describe('table', () => {
   it('should return table source', () => {
     const code = new Code();
 
+    code.define('user_status');
+
     const source = code.table(definition);
 
     expect(source).toBe(dedent`
       export namespace users_fields {
         export type id = number;
         export type first_name = string | null;
-        export type Status = any;
+        export type Status = user_status;
         export type exists = any;
       }
 
@@ -76,13 +78,15 @@ describe('table', () => {
   it('should return enum source using SnakeCaseNamingStrategy', () => {
     const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
+    code.define('user_status');
+
     const source = code.table(definition);
 
     expect(source).toBe(dedent`
       export namespace users_fields {
         export type id = number;
         export type first_name = string | null;
-        export type status = any;
+        export type status = user_status;
         export type exists = any;
       }
 
@@ -98,13 +102,15 @@ describe('table', () => {
   it('should return enum source using CamelCaseNamingStrategy', () => {
     const code = new Code({ namingStrategy: new CamelCaseNamingStrategy() });
 
+    code.define('user_status');
+
     const source = code.table(definition);
 
     expect(source).toBe(dedent`
       export namespace UsersFields {
         export type id = number;
         export type firstName = string | null;
-        export type status = any;
+        export type status = UserStatus;
         export type exists = any;
       }
 
@@ -158,6 +164,68 @@ describe('table', () => {
 
       export interface users {
         default: users_fields.default_;
+      }
+    `);
+  });
+
+  it('should fallback to any for unknown type', () => {
+    const code = new Code();
+
+    const source = code.table({
+      name: 'users',
+      columns: [
+        {
+          name: 'field',
+          type: {
+            nullable: false,
+            alt: null,
+            type: null,
+            sql: 'custom_type',
+            schema: 'public',
+          },
+        },
+      ],
+    });
+
+    expect(source).toBe(dedent`
+      export namespace users_fields {
+        export type field = any;
+      }
+
+      export interface users {
+        field: users_fields.field;
+      }
+    `);
+  });
+
+  it('should use udt if defined', () => {
+    const code = new Code();
+
+    code.define('custom_type');
+
+    const source = code.table({
+      name: 'users',
+      columns: [
+        {
+          name: 'field',
+          type: {
+            nullable: false,
+            alt: null,
+            type: null,
+            sql: 'custom_type',
+            schema: 'public',
+          },
+        },
+      ],
+    });
+
+    expect(source).toBe(dedent`
+      export namespace users_fields {
+        export type field = custom_type;
+      }
+
+      export interface users {
+        field: users_fields.field;
       }
     `);
   });
