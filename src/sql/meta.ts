@@ -57,7 +57,8 @@ export class Meta {
             'nullable', c.is_nullable = 'YES',
             'type', c.udt_name,
             'alt', CASE WHEN c.data_type = 'USER-DEFINED' THEN NULL ELSE c.data_type END,
-            'typeSchema', c.udt_schema
+            'typeSchema', c.udt_schema,
+            'default', c.column_default
           )
           ORDER BY
             c.ordinal_position ASC
@@ -84,6 +85,7 @@ export class Meta {
           nullable: columnDefinition.nullable,
           type: (typeMaps.find(t => t.types.includes(columnDefinition.type)) || { type: null }).type,
           schema: columnDefinition.typeSchema,
+          default: columnDefinition.default,
         },
       })),
     }));

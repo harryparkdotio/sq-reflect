@@ -47,6 +47,7 @@ export class Code {
       prop: string;
       ref: string;
       meta: string;
+      default: string | null;
     }
 
     const cols = definition.columns.map<Cols>(col => ({
@@ -54,6 +55,7 @@ export class Code {
       prop: this.ns.property(col.name),
       ref: Transform.reserved(this.ns.type(col.name)),
       meta: col.type.sql,
+      default: col.type.default,
     }));
 
     return source`
@@ -65,7 +67,11 @@ export class Code {
         ${[].concat(
           ...cols.map(col =>
             [
-              `${this.opt.meta && col.meta ? this.meta({ type: col.meta }) : ''}`,
+              `${
+                this.opt.meta && col.meta
+                  ? this.meta({ type: col.meta, ...(col.default && { default: col.default }) })
+                  : ''
+              }`,
               `${col.prop}: ${_namespace}.${col.ref};`,
             ].filter(elem => elem)
           )

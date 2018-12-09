@@ -15,6 +15,7 @@ const definition: TableDefinition = {
         alt: 'integer',
         type: 'number',
         schema: 'pg_catalog',
+        default: null,
       },
     },
     {
@@ -25,6 +26,7 @@ const definition: TableDefinition = {
         alt: 'character varying',
         type: 'string',
         schema: 'pg_catalog',
+        default: null,
       },
     },
     {
@@ -35,6 +37,7 @@ const definition: TableDefinition = {
         alt: null,
         type: null,
         schema: 'public',
+        default: null,
       },
     },
     {
@@ -45,6 +48,7 @@ const definition: TableDefinition = {
         alt: null,
         type: null,
         schema: 'public',
+        default: 'true',
       },
     },
   ],
@@ -154,6 +158,7 @@ describe('table', () => {
             type: 'string',
             sql: '',
             schema: 'pg_catalog',
+            default: null,
           },
         },
       ],
@@ -184,6 +189,7 @@ describe('table', () => {
             type: null,
             sql: 'custom_type',
             schema: 'public',
+            default: null,
           },
         },
       ],
@@ -216,6 +222,7 @@ describe('table', () => {
             type: null,
             sql: 'custom_type',
             schema: 'public',
+            default: null,
           },
         },
       ],
@@ -255,7 +262,7 @@ describe('table', () => {
           first_name: users_fields.first_name;
           /** @type user_status */
           Status: users_fields.Status;
-          /** @type user_exists */
+          /** @type user_exists @default true */
           exists: users_fields.exists;
         }
       `);
@@ -283,7 +290,7 @@ describe('table', () => {
           first_name: users_fields.first_name;
           /** @type user_status */
           status: users_fields.status;
-          /** @type user_exists */
+          /** @type user_exists @default true */
           exists: users_fields.exists;
         }
       `);
@@ -311,7 +318,7 @@ describe('table', () => {
           firstName: UsersFields.firstName;
           /** @type user_status */
           status: UsersFields.status;
-          /** @type user_exists */
+          /** @type user_exists @default true */
           exists: UsersFields.exists;
         }
       `);

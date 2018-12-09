@@ -60,7 +60,9 @@ describe('Meta', () => {
 
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
       await db.query(`CREATE TYPE enum_comment_type AS ENUM ('PUBLIC', 'PRIVATE');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
+      );
       await db.query(
         `CREATE TABLE "comments" (id int PRIMARY KEY, user_id int references users(id), comment text, created_at timestamp, type enum_comment_type);`
       );
@@ -79,6 +81,7 @@ describe('Meta', () => {
               sql: 'int4',
               alt: 'integer',
               schema: 'pg_catalog',
+              default: null,
             },
           },
           {
@@ -89,6 +92,7 @@ describe('Meta', () => {
               schema: 'pg_catalog',
               sql: 'timestamp',
               alt: 'timestamp without time zone',
+              default: 'now()',
             },
           },
           {
@@ -99,6 +103,7 @@ describe('Meta', () => {
               sql: 'enum_user_status',
               alt: null,
               schema: 'public',
+              default: null,
             },
           },
         ],
@@ -116,6 +121,7 @@ describe('Meta', () => {
               sql: 'int4',
               alt: 'integer',
               schema: 'pg_catalog',
+              default: null,
             },
           },
           {
@@ -126,6 +132,7 @@ describe('Meta', () => {
               sql: 'int4',
               alt: 'integer',
               schema: 'pg_catalog',
+              default: null,
             },
           },
           {
@@ -136,6 +143,7 @@ describe('Meta', () => {
               sql: 'text',
               alt: 'text',
               schema: 'pg_catalog',
+              default: null,
             },
           },
           {
@@ -146,6 +154,7 @@ describe('Meta', () => {
               schema: 'pg_catalog',
               sql: 'timestamp',
               alt: 'timestamp without time zone',
+              default: null,
             },
           },
           {
@@ -156,6 +165,7 @@ describe('Meta', () => {
               sql: 'enum_comment_type',
               alt: null,
               schema: 'public',
+              default: null,
             },
           },
         ],
