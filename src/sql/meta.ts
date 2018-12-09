@@ -50,30 +50,26 @@ export class Meta {
   async Tables(options: TablesMetaOptions = { schema: Meta.defaultSchema }): Promise<TableDefinition[]> {
     const sql = dedent`
       SELECT
-        t.table_name "name",
-        array_to_json(array_agg(
+        c.table_name "name",
+        json_agg(
           json_build_object(
-            'name', t.column_name,
-            'nullable', t.is_nullable = 'YES',
-            'type', t.udt_name,
-            'alt', CASE WHEN t.data_type = 'USER-DEFINED' THEN NULL ELSE t.data_type END,
-            'typeSchema', t.udt_schema
+            'name', c.column_name,
+            'nullable', c.is_nullable = 'YES',
+            'type', c.udt_name,
+            'alt', CASE WHEN c.data_type = 'USER-DEFINED' THEN NULL ELSE c.data_type END,
+            'typeSchema', c.udt_schema
           )
-        )) "columns"
-      FROM (
-        SELECT
-          *
-        FROM
-          information_schema.columns c
-        WHERE
-          c.table_schema = $1
-        ORDER BY
-          c.ordinal_position ASC
-      ) t
+          ORDER BY
+            c.ordinal_position ASC
+        ) "columns"
+      FROM
+        information_schema.columns c
+      WHERE
+        c.table_schema = $1
       GROUP BY
-        t.table_name
+        c.table_name
       ORDER BY
-        t.table_name ASC;`;
+        c.table_name;`;
 
     const definitions: RawTableDefinition[] = await this.db.query(sql, [options.schema]);
 
