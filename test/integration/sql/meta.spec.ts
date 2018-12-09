@@ -12,8 +12,10 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  await db.query(`DROP TABLE IF EXISTS "comments";`);
   await db.query(`DROP TABLE IF EXISTS "users";`);
   await db.query(`DROP TYPE IF EXISTS enum_user_status;`);
+  await db.query(`DROP TYPE IF EXISTS enum_comment_type;`);
   await db.disconnect();
 });
 
@@ -57,7 +59,11 @@ describe('Meta', () => {
       const meta = new Meta(db);
 
       await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(`CREATE TYPE enum_comment_type AS ENUM ('PUBLIC', 'PRIVATE');`);
       await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TABLE "comments" (id int PRIMARY KEY, user_id int references users(id), comment text, created_at timestamp, type enum_comment_type);`
+      );
 
       const tables = await meta.Tables();
 
@@ -98,7 +104,64 @@ describe('Meta', () => {
         ],
       };
 
-      expect(tables).toEqual([UsersTable]);
+      const CommentsTable: TableDefinition = {
+        name: 'comments',
+        schema: 'public',
+        columns: [
+          {
+            name: 'id',
+            type: {
+              nullable: false,
+              type: 'number',
+              sql: 'int4',
+              alt: 'integer',
+              schema: 'pg_catalog',
+            },
+          },
+          {
+            name: 'user_id',
+            type: {
+              nullable: true,
+              type: 'number',
+              sql: 'int4',
+              alt: 'integer',
+              schema: 'pg_catalog',
+            },
+          },
+          {
+            name: 'comment',
+            type: {
+              nullable: true,
+              type: 'string',
+              sql: 'text',
+              alt: 'text',
+              schema: 'pg_catalog',
+            },
+          },
+          {
+            name: 'created_at',
+            type: {
+              nullable: true,
+              type: 'Date',
+              schema: 'pg_catalog',
+              sql: 'timestamp',
+              alt: 'timestamp without time zone',
+            },
+          },
+          {
+            name: 'type',
+            type: {
+              nullable: true,
+              type: null,
+              sql: 'enum_comment_type',
+              alt: null,
+              schema: 'public',
+            },
+          },
+        ],
+      };
+
+      expect(tables).toEqual([CommentsTable, UsersTable]);
     });
   });
 });
