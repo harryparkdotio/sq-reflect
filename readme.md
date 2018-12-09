@@ -29,9 +29,9 @@ CREATE TABLE "users" (
   id uuid PRIMARY KEY,
   status enum_user_status not null default 'PENDING',
   created_at timestamp,
-  default boolean,
-  data json,
-  col unknown_type
+  default boolean not null,
+  data json not null,
+  col unknown_type not null
 );
 ```
 
