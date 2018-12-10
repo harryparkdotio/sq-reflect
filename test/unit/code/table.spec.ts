@@ -56,30 +56,6 @@ const definition: TableDefinition = {
 
 describe('table', () => {
   describe('source', () => {
-    it('should return table source', () => {
-      const code = new Code();
-
-      code.define('user_status');
-
-      const source = code.table(definition);
-
-      expect(source).toBe(dedent`
-        export namespace users_fields {
-          export type id = number;
-          export type first_name = string | null;
-          export type Status = user_status;
-          export type exists = any;
-        }
-  
-        export interface users {
-          id: users_fields.id;
-          first_name: users_fields.first_name;
-          Status: users_fields.Status;
-          exists: users_fields.exists;
-        }
-      `);
-    });
-
     it('should return enum source using SnakeCaseNamingStrategy', () => {
       const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
@@ -130,7 +106,7 @@ describe('table', () => {
   });
 
   it('should transform table name if reserved keyword', () => {
-    const code = new Code();
+    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
     const source = code.table({
       name: 'default',
@@ -145,7 +121,7 @@ describe('table', () => {
   });
 
   it('should transform namespace type name if reserved keyword', () => {
-    const code = new Code();
+    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
     const source = code.table({
       name: 'users',
@@ -176,7 +152,7 @@ describe('table', () => {
   });
 
   it('should fallback to any for unknown type', () => {
-    const code = new Code();
+    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
     const source = code.table({
       name: 'users',
@@ -207,7 +183,7 @@ describe('table', () => {
   });
 
   it('should use udt if defined', () => {
-    const code = new Code();
+    const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
     code.define('custom_type');
 
@@ -240,34 +216,6 @@ describe('table', () => {
   });
 
   describe('metadata', () => {
-    it('should return table source with metadata', () => {
-      const code = new Code({ emitMetadata: true });
-
-      code.define('user_status');
-
-      const source = code.table(definition);
-
-      expect(source).toBe(dedent`
-        export namespace users_fields {
-          export type id = number;
-          export type first_name = string | null;
-          export type Status = user_status;
-          export type exists = any;
-        }
-
-        export interface users {
-          /** @type int4 */
-          id: users_fields.id;
-          /** @type varchar */
-          first_name: users_fields.first_name;
-          /** @type user_status */
-          Status: users_fields.Status;
-          /** @type user_exists @default true */
-          exists: users_fields.exists;
-        }
-      `);
-    });
-
     it('should return table source with metadata using SnakeCaseNamingStrategy', () => {
       const code = new Code({ emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
 
