@@ -56,7 +56,7 @@ const definition: TableDefinition = {
 
 describe('table', () => {
   describe('source', () => {
-    it('should return enum source using SnakeCaseNamingStrategy', () => {
+    it('should return table source using SnakeCaseNamingStrategy', () => {
       const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
 
       code.define('user_status');
@@ -80,7 +80,7 @@ describe('table', () => {
       `);
     });
 
-    it('should return enum source using CamelCaseNamingStrategy', () => {
+    it('should return table source using CamelCaseNamingStrategy', () => {
       const code = new Code({ namingStrategy: new CamelCaseNamingStrategy() });
 
       code.define('user_status');
@@ -268,6 +268,114 @@ describe('table', () => {
           status: UsersFields.status;
           /** @type user_exists @default true */
           exists: UsersFields.exists;
+        }
+      `);
+    });
+  });
+
+  describe('generics', () => {
+    it('should return table source with generics using SnakeCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type status = user_status;
+          export type exists<T = any> = T;
+        }
+
+        export interface users<exists_type = any> {
+          id: users_fields.id;
+          first_name: users_fields.first_name;
+          status: users_fields.status;
+          exists: users_fields.exists<exists_type>;
+        }
+      `);
+    });
+
+    it('should return table source with generics using CamelCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type firstName = string | null;
+          export type status = UserStatus;
+          export type exists<T = any> = T;
+        }
+
+        export interface Users<ExistsType = any> {
+          id: UsersFields.id;
+          firstName: UsersFields.firstName;
+          status: UsersFields.status;
+          exists: UsersFields.exists<ExistsType>;
+        }
+      `);
+    });
+  });
+
+  describe('metadata + generics', () => {
+    it('should return table source with metadata + generics using SnakeCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type status = user_status;
+          export type exists<T = any> = T;
+        }
+
+        export interface users<exists_type = any> {
+          /** @type int4 */
+          id: users_fields.id;
+          /** @type varchar */
+          first_name: users_fields.first_name;
+          /** @type user_status */
+          status: users_fields.status;
+          /** @type user_exists @default true */
+          exists: users_fields.exists<exists_type>;
+        }
+      `);
+    });
+
+    it('should return table source with metadata + generics using CamelCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      code.define('user_status');
+
+      const source = code.table(definition);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type firstName = string | null;
+          export type status = UserStatus;
+          export type exists<T = any> = T;
+        }
+
+        export interface Users<ExistsType = any> {
+          /** @type int4 */
+          id: UsersFields.id;
+          /** @type varchar */
+          firstName: UsersFields.firstName;
+          /** @type user_status */
+          status: UsersFields.status;
+          /** @type user_exists @default true */
+          exists: UsersFields.exists<ExistsType>;
         }
       `);
     });

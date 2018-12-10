@@ -48,3 +48,5 @@ export const reservedKeywords: string[] = [
   'with',
   'yield',
 ];
+
+export const genericableTypes: string[] = ['any', 'object'];
