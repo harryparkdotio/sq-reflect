@@ -54,6 +54,56 @@ const definition: TableDefinition = {
   ],
 };
 
+const genericsDefinition: TableDefinition = {
+  name: 'users',
+  columns: [
+    {
+      name: 'id',
+      type: {
+        nullable: false,
+        sql: 'int4',
+        alt: 'integer',
+        type: 'number',
+        schema: 'pg_catalog',
+        default: null,
+      },
+    },
+    {
+      name: 'first_name',
+      type: {
+        nullable: true,
+        sql: 'varchar',
+        alt: 'character varying',
+        type: 'string',
+        schema: 'pg_catalog',
+        default: null,
+      },
+    },
+    {
+      name: 'Status',
+      type: {
+        nullable: false,
+        sql: 'json',
+        alt: null,
+        type: 'object',
+        schema: 'public',
+        default: null,
+      },
+    },
+    {
+      name: 'exists',
+      type: {
+        nullable: false,
+        sql: 'user_exists',
+        alt: null,
+        type: null,
+        schema: 'public',
+        default: 'true',
+      },
+    },
+  ],
+};
+
 describe('table', () => {
   describe('source', () => {
     it('should return table source using SnakeCaseNamingStrategy', () => {
@@ -317,6 +367,50 @@ describe('table', () => {
           id: UsersFields.id;
           firstName: UsersFields.firstName;
           status: UsersFields.status;
+          exists: UsersFields.exists<ExistsType>;
+        }
+      `);
+    });
+
+    it('should return table source with multiple generics using SnakeCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      const source = code.table(genericsDefinition);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type first_name = string | null;
+          export type status<T = object> = T;
+          export type exists<T = any> = T;
+        }
+
+        export interface users<status_type = object, exists_type = any> {
+          id: users_fields.id;
+          first_name: users_fields.first_name;
+          status: users_fields.status<status_type>;
+          exists: users_fields.exists<exists_type>;
+        }
+      `);
+    });
+
+    it('should return table source with multiple generics using CamelCaseNamingStrategy', () => {
+      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      const source = code.table(genericsDefinition);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type firstName = string | null;
+          export type status<T = object> = T;
+          export type exists<T = any> = T;
+        }
+
+        export interface Users<StatusType = object, ExistsType = any> {
+          id: UsersFields.id;
+          firstName: UsersFields.firstName;
+          status: UsersFields.status<StatusType>;
           exists: UsersFields.exists<ExistsType>;
         }
       `);
