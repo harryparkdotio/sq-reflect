@@ -1,5 +1,6 @@
 import { inlineLists, source } from 'common-tags';
 
+import { genericableTypes } from '../constants';
 import { EnumDefinition, TableDefinition, TypeDefinition } from '../sql/definitions';
 import { Transform } from '../transform';
 
@@ -8,6 +9,7 @@ import { NamingStrategy } from './naming-strategy';
 export interface CodeOptions {
   namingStrategy: NamingStrategy;
   emitMetadata: boolean;
+  emitGenerics: boolean;
 }
 
 type ParialCodeOptions = Partial<CodeOptions>;
@@ -16,7 +18,7 @@ type RequiredCodeOptions = Pick<CodeOptions, 'namingStrategy'>;
 export class Code {
   private readonly ns: NamingStrategy;
   private readonly definitions: string[];
-  private opt: { meta: boolean };
+  private opt: { meta: boolean; generics: boolean };
 
   constructor(options: ParialCodeOptions & RequiredCodeOptions) {
     this.ns = options.namingStrategy;
@@ -24,6 +26,7 @@ export class Code {
 
     this.opt = {
       meta: options.emitMetadata || false,
+      generics: options.emitGenerics || false,
     };
   }
 
@@ -46,36 +49,41 @@ export class Code {
     const _interface = Transform.reserved(this.ns.interface(definition.name));
 
     interface Cols {
-      type: string;
+      type: { type: string; nullable: string; generic: string };
       prop: string;
       ref: string;
-      meta: string;
-      default: string | null;
+      meta: object;
+      generic: string;
     }
 
     const cols = definition.columns.map<Cols>(col => ({
       type: this.type(col.type),
       prop: this.ns.property(col.name),
       ref: Transform.reserved(this.ns.type(col.name)),
-      meta: col.type.sql,
-      default: col.type.default,
+      meta: { type: col.type.sql, ...(col.type.default && { default: col.type.default }) },
+      generic:
+        this.opt.generics && genericableTypes.includes(this.type(col.type).type) ? this.ns.udt(col.name + '_type') : '',
     }));
+
+    const generics = cols
+      .filter(col => col.generic)
+      .map(({ generic, type: { type } }) => `${generic} = ${type}`)
+      .join(', ');
 
     return source`
       export namespace ${_namespace} {
-        ${cols.map(col => `export type ${col.ref} = ${col.type};`)}
+        ${cols.map(
+          ({ generic, ref, type }) =>
+            `export type ${ref}${generic ? `<T = ${type.type}>` : ''} = ${generic ? type.generic : type.nullable};`
+        )}
       }
 
-      export interface ${_interface} {
+      export interface ${_interface}${generics ? `<${generics}>` : ''} {
         ${[].concat(
-          ...cols.map(col =>
+          ...cols.map(({ generic, meta, prop, ref }) =>
             [
-              `${
-                this.opt.meta && col.meta
-                  ? this.meta({ type: col.meta, ...(col.default && { default: col.default }) })
-                  : ''
-              }`,
-              `${col.prop}: ${_namespace}.${col.ref};`,
+              `${this.opt.meta && meta ? this.meta(meta) : ''}`,
+              `${prop}: ${_namespace}.${ref}${generic ? `<${generic}>` : ''};`,
             ].filter(elem => elem)
           )
         )}
@@ -85,12 +93,14 @@ export class Code {
 
   type(definition: TypeDefinition) {
     const udt = !definition.type && this.definitions.find(def => def === definition.sql);
+    const type = definition.type || (udt && this.ns.udt(udt)) || 'any';
+    const _null = definition.nullable ? ['null'] : [];
 
-    const types = [definition.type || (udt && this.ns.udt(udt)) || 'any'];
-
-    definition.nullable && types.push('null');
-
-    return types.join(' | ');
+    return {
+      type,
+      nullable: [type, ..._null].join(' | '),
+      generic: ['T', ..._null].join(' | '),
+    };
   }
 
   meta(metadata: { [doc: string]: any }) {

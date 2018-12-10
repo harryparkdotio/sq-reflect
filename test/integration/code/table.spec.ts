@@ -162,4 +162,126 @@ describe('table', () => {
       `);
     });
   });
+
+  describe('generics', () => {
+    it('should return table source with generics using SnakeCaseNamingStrategy', async () => {
+      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+
+      const tables = await meta.Tables();
+      const enums = await meta.Enums();
+
+      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      code.define(enums[0].name);
+
+      const source = code.table(tables[0]);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type created_at<T = object> = T | null;
+          export type status = enum_user_status | null;
+        }
+
+        export interface users<created_at_type = object> {
+          id: users_fields.id;
+          created_at: users_fields.created_at<created_at_type>;
+          status: users_fields.status;
+        }
+      `);
+    });
+
+    it('should return table source with generics using CamelCaseNamingStrategy', async () => {
+      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+
+      const tables = await meta.Tables();
+      const enums = await meta.Enums();
+
+      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      code.define(enums[0].name);
+
+      const source = code.table(tables[0]);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type createdAt<T = object> = T | null;
+          export type status = EnumUserStatus | null;
+        }
+
+        export interface Users<CreatedAtType = object> {
+          id: UsersFields.id;
+          createdAt: UsersFields.createdAt<CreatedAtType>;
+          status: UsersFields.status;
+        }
+      `);
+    });
+  });
+
+  describe('metadata + generics', () => {
+    it('should return table source with metadata + generics using SnakeCaseNamingStrategy', async () => {
+      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+
+      const tables = await meta.Tables();
+      const enums = await meta.Enums();
+
+      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+
+      code.define(enums[0].name);
+
+      const source = code.table(tables[0]);
+
+      expect(source).toBe(dedent`
+        export namespace users_fields {
+          export type id = number;
+          export type created_at<T = object> = T | null;
+          export type status = enum_user_status | null;
+        }
+
+        export interface users<created_at_type = object> {
+          /** @type int4 */
+          id: users_fields.id;
+          /** @type json */
+          created_at: users_fields.created_at<created_at_type>;
+          /** @type enum_user_status */
+          status: users_fields.status;
+        }
+      `);
+    });
+
+    it('should return table source with metadata + generics using CamelCaseNamingStrategy', async () => {
+      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+
+      const tables = await meta.Tables();
+      const enums = await meta.Enums();
+
+      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+
+      code.define(enums[0].name);
+
+      const source = code.table(tables[0]);
+
+      expect(source).toBe(dedent`
+        export namespace UsersFields {
+          export type id = number;
+          export type createdAt<T = object> = T | null;
+          export type status = EnumUserStatus | null;
+        }
+
+        export interface Users<CreatedAtType = object> {
+          /** @type int4 */
+          id: UsersFields.id;
+          /** @type json */
+          createdAt: UsersFields.createdAt<CreatedAtType>;
+          /** @type enum_user_status */
+          status: UsersFields.status;
+        }
+      `);
+    });
+  });
 });
