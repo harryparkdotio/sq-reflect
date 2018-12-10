@@ -3,20 +3,23 @@ import { inlineLists, source } from 'common-tags';
 import { EnumDefinition, TableDefinition, TypeDefinition } from '../sql/definitions';
 import { Transform } from '../transform';
 
-import { NamingStrategy, PassiveNamingStrategy } from './naming-strategy';
+import { NamingStrategy } from './naming-strategy';
 
-export type CodeOptions = Partial<{
+export interface CodeOptions {
   namingStrategy: NamingStrategy;
   emitMetadata: boolean;
-}>;
+}
+
+type ParialCodeOptions = Partial<CodeOptions>;
+type RequiredCodeOptions = Pick<CodeOptions, 'namingStrategy'>;
 
 export class Code {
   private readonly ns: NamingStrategy;
   private readonly definitions: string[];
   private opt: { meta: boolean };
 
-  constructor(options: CodeOptions = {}) {
-    this.ns = options.namingStrategy || new PassiveNamingStrategy();
+  constructor(options: ParialCodeOptions & RequiredCodeOptions) {
+    this.ns = options.namingStrategy;
     this.definitions = [];
 
     this.opt = {

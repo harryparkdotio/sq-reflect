@@ -9,4 +9,3 @@ export interface NamingStrategy {
 
 export { CamelCaseNamingStrategy } from './camel-case';
 export { SnakeCaseNamingStrategy } from './snake-case';
-export { PassiveNamingStrategy } from './passive';
