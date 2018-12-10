@@ -67,6 +67,14 @@ export class Meta {
         information_schema.columns c
       WHERE
         c.table_schema = $1
+        AND NOT EXISTS (
+          SELECT
+            1
+          FROM
+            pg_catalog.pg_views v
+          WHERE
+            v.viewname = c.table_name
+        )
       GROUP BY
         c.table_name
       ORDER BY

@@ -12,6 +12,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+  await db.query(`DROP VIEW IF EXISTS "temp_view";`);
   await db.query(`DROP TABLE IF EXISTS "comments";`);
   await db.query(`DROP TABLE IF EXISTS "users";`);
   await db.query(`DROP TYPE IF EXISTS enum_user_status;`);
@@ -172,6 +173,16 @@ describe('Meta', () => {
       };
 
       expect(tables).toEqual([CommentsTable, UsersTable]);
+    });
+
+    it('should exclude views', async () => {
+      const meta = new Meta(db);
+
+      await db.query(`CREATE VIEW temp_view AS (SELECT 1);`);
+
+      const tables = await meta.Tables();
+
+      expect(tables).toEqual([]);
     });
   });
 });
