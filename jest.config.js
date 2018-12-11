@@ -8,7 +8,7 @@ const baseConfig = {
 
 module.exports = {
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/cli.ts'],
   coverageReporters: ['lcov', 'text-summary'],
   projects: [
     {
@@ -19,6 +19,11 @@ module.exports = {
     {
       displayName: 'integration',
       testRegex: '/test/integration/.*\\.spec\\.ts$',
+      ...baseConfig,
+    },
+    {
+      displayName: 'e2e',
+      testRegex: '/test/e2e/.*\\.spec\\.ts$',
       ...baseConfig,
     },
   ],

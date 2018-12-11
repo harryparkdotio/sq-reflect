@@ -53,9 +53,9 @@ describe('Meta', () => {
     });
 
     it('should call db.query with params', async () => {
-      const meta = new Meta(PostgresMock);
+      const meta = new Meta(PostgresMock, { schema: 'not_public' });
 
-      await meta.Enums({ schema: 'not_public' });
+      await meta.Enums();
 
       expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['not_public']);
     });
@@ -158,9 +158,9 @@ describe('Meta', () => {
     it('should call db.query with params', async () => {
       (queryResultMock as RawTableDefinition[]) = [];
 
-      const meta = new Meta(PostgresMock);
+      const meta = new Meta(PostgresMock, { schema: 'not_public' });
 
-      await meta.Tables({ schema: 'not_public' });
+      await meta.Tables();
 
       expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['not_public']);
     });
