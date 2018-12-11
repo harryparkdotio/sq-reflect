@@ -12,22 +12,22 @@ import {
   TableDefinition,
 } from './definitions';
 
-interface BaseMetaOptions {
+interface MetaOptions {
   schema: string;
-  table: string;
 }
 
-type EnumsMetaOptions = Pick<BaseMetaOptions, 'schema'>;
-type TablesMetaOptions = Pick<BaseMetaOptions, 'schema'>;
-
 export class Meta {
-  constructor(protected readonly db: Driver) {}
+  private schema: string;
+
+  constructor(protected readonly db: Driver, options: Partial<MetaOptions> = {}) {
+    this.schema = options.schema || Meta.defaultSchema;
+  }
 
   static get defaultSchema(): string {
     return 'public';
   }
 
-  async Enums(options: EnumsMetaOptions = { schema: Meta.defaultSchema }): Promise<EnumDefinition[]> {
+  async Enums(): Promise<EnumDefinition[]> {
     const sql = dedent`
       SELECT
         t.typname "name",
@@ -39,15 +39,15 @@ export class Meta {
       GROUP BY t.typname
       ORDER BY t.typname ASC;`;
 
-    const definitions: RawEnumDefinition[] = await this.db.query(sql, [options.schema]);
+    const definitions: RawEnumDefinition[] = await this.db.query(sql, [this.schema]);
 
     return definitions.map<EnumDefinition>(definition => ({
-      schema: options.schema,
+      schema: this.schema,
       ...definition,
     }));
   }
 
-  async Tables(options: TablesMetaOptions = { schema: Meta.defaultSchema }): Promise<TableDefinition[]> {
+  async Tables(): Promise<TableDefinition[]> {
     const sql = dedent`
       SELECT
         c.table_name "name",
@@ -80,11 +80,11 @@ export class Meta {
       ORDER BY
         c.table_name;`;
 
-    const definitions: RawTableDefinition[] = await this.db.query(sql, [options.schema]);
+    const definitions: RawTableDefinition[] = await this.db.query(sql, [this.schema]);
 
     return definitions.map<TableDefinition>(definition => ({
       name: definition.name,
-      schema: options.schema,
+      schema: this.schema,
       columns: definition.columns.map<ColumnDefinition>(columnDefinition => ({
         name: columnDefinition.name,
         type: {
