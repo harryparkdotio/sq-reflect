@@ -35,7 +35,7 @@ notifications:
 stages:
   - test
   - name: deploy
-    if: type = push AND tag IS present AND branch = master
+    if: type = push AND tag IS present
 
 jobs:
   include:
@@ -52,3 +52,4 @@ jobs:
         api_key: $NPM_TOKEN
         on:
           tags: true
+          branch: master
