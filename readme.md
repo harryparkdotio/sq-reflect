@@ -48,11 +48,11 @@ export namespace users_fields {
   export type status = enum_user_status;
   export type created_at = Date | null;
   export type default_ = boolean;
-  export type data = object;
-  export type col = any;
+  export type data<T = object> = T;
+  export type col<T = any> = T;
 }
 
-export interface users {
+export interface users<data_type, col_type> {
   /** @type uuid */
   id: users_fields.id;
   /** @type enum_user_status */
@@ -62,8 +62,8 @@ export interface users {
   /** @type boolean */
   default: users_fields.default_;
   /** @type json */
-  data: users_fields.data;
+  data: users_fields.data<data_type>;
   /** @type unknown_type */
-  col: users_fields.col;
+  col: users_fields.col<col_type>;
 }
 ```
