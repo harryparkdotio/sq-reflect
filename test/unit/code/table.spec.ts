@@ -114,18 +114,18 @@ describe('table', () => {
       const source = code.table(definition);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type first_name = string | null;
-          export type status = user_status;
+          export type status = UserStatus;
           export type exists = any;
         }
   
-        export interface users {
-          id: users_fields.id;
-          first_name: users_fields.first_name;
-          status: users_fields.status;
-          exists: users_fields.exists;
+        export interface Users {
+          id: UsersFields.id;
+          first_name: UsersFields.first_name;
+          status: UsersFields.status;
+          exists: UsersFields.exists;
         }
       `);
     });
@@ -164,9 +164,9 @@ describe('table', () => {
     });
 
     expect(source).toBe(dedent`
-      export namespace default_fields {\n  \n}
+      export namespace DefaultFields {\n  \n}
 
-      export interface default_ {\n  \n}
+      export interface Default {\n  \n}
     `);
   });
 
@@ -191,12 +191,12 @@ describe('table', () => {
     });
 
     expect(source).toBe(dedent`
-      export namespace users_fields {
+      export namespace UsersFields {
         export type default_ = string;
       }
 
-      export interface users {
-        default: users_fields.default_;
+      export interface Users {
+        default: UsersFields.default_;
       }
     `);
   });
@@ -222,12 +222,12 @@ describe('table', () => {
     });
 
     expect(source).toBe(dedent`
-      export namespace users_fields {
+      export namespace UsersFields {
         export type field = any;
       }
 
-      export interface users {
-        field: users_fields.field;
+      export interface Users {
+        field: UsersFields.field;
       }
     `);
   });
@@ -255,12 +255,12 @@ describe('table', () => {
     });
 
     expect(source).toBe(dedent`
-      export namespace users_fields {
-        export type field = custom_type;
+      export namespace UsersFields {
+        export type field = CustomType;
       }
 
-      export interface users {
-        field: users_fields.field;
+      export interface Users {
+        field: UsersFields.field;
       }
     `);
   });
@@ -274,22 +274,22 @@ describe('table', () => {
       const source = code.table(definition);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type first_name = string | null;
-          export type status = user_status;
+          export type status = UserStatus;
           export type exists = any;
         }
 
-        export interface users {
+        export interface Users {
           /** @type int4 */
-          id: users_fields.id;
+          id: UsersFields.id;
           /** @type varchar */
-          first_name: users_fields.first_name;
+          first_name: UsersFields.first_name;
           /** @type user_status */
-          status: users_fields.status;
+          status: UsersFields.status;
           /** @type user_exists @default true */
-          exists: users_fields.exists;
+          exists: UsersFields.exists;
         }
       `);
     });
@@ -332,18 +332,18 @@ describe('table', () => {
       const source = code.table(definition);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type first_name = string | null;
-          export type status = user_status;
+          export type status = UserStatus;
           export type exists<T = any> = T;
         }
 
-        export interface users<exists_type = any> {
-          id: users_fields.id;
-          first_name: users_fields.first_name;
-          status: users_fields.status;
-          exists: users_fields.exists<exists_type>;
+        export interface Users<ExistsType = any> {
+          id: UsersFields.id;
+          first_name: UsersFields.first_name;
+          status: UsersFields.status;
+          exists: UsersFields.exists<ExistsType>;
         }
       `);
     });
@@ -378,18 +378,18 @@ describe('table', () => {
       const source = code.table(genericsDefinition);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type first_name = string | null;
           export type status<T = object> = T;
           export type exists<T = any> = T;
         }
 
-        export interface users<status_type = object, exists_type = any> {
-          id: users_fields.id;
-          first_name: users_fields.first_name;
-          status: users_fields.status<status_type>;
-          exists: users_fields.exists<exists_type>;
+        export interface Users<StatusType = object, ExistsType = any> {
+          id: UsersFields.id;
+          first_name: UsersFields.first_name;
+          status: UsersFields.status<StatusType>;
+          exists: UsersFields.exists<ExistsType>;
         }
       `);
     });
@@ -426,22 +426,22 @@ describe('table', () => {
       const source = code.table(definition);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type first_name = string | null;
-          export type status = user_status;
+          export type status = UserStatus;
           export type exists<T = any> = T;
         }
 
-        export interface users<exists_type = any> {
+        export interface Users<ExistsType = any> {
           /** @type int4 */
-          id: users_fields.id;
+          id: UsersFields.id;
           /** @type varchar */
-          first_name: users_fields.first_name;
+          first_name: UsersFields.first_name;
           /** @type user_status */
-          status: users_fields.status;
+          status: UsersFields.status;
           /** @type user_exists @default true */
-          exists: users_fields.exists<exists_type>;
+          exists: UsersFields.exists<ExistsType>;
         }
       `);
     });

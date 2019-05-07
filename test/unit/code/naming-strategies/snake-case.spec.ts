@@ -9,7 +9,7 @@ describe('SnakeCaseNamingStrategy', () => {
       const text = 'enum';
 
       new SnakeCaseNamingStrategy().enum(text);
-      expect(Transform.snake).toHaveBeenCalledWith(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
     });
   });
 
@@ -18,7 +18,7 @@ describe('SnakeCaseNamingStrategy', () => {
       const text = 'namespace';
 
       new SnakeCaseNamingStrategy().namespace(text);
-      expect(Transform.snake).toHaveBeenCalledWith(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
     });
   });
 
@@ -27,7 +27,7 @@ describe('SnakeCaseNamingStrategy', () => {
       const text = 'type';
 
       new SnakeCaseNamingStrategy().type(text);
-      expect(Transform.snake).toHaveBeenCalledWith(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
     });
   });
 
@@ -36,7 +36,7 @@ describe('SnakeCaseNamingStrategy', () => {
       const text = 'interface';
 
       new SnakeCaseNamingStrategy().interface(text);
-      expect(Transform.snake).toHaveBeenCalledWith(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
     });
   });
 
@@ -54,7 +54,7 @@ describe('SnakeCaseNamingStrategy', () => {
       const text = 'udt';
 
       new SnakeCaseNamingStrategy().udt(text);
-      expect(Transform.snake).toHaveBeenCalledWith(text);
+      expect(Transform.pascal).toHaveBeenCalledWith(text);
     });
   });
 });

@@ -1,10 +1,10 @@
-export interface NamingStrategy {
-  enum(name: string): string;
-  namespace(name: string): string;
-  type(name: string): string;
-  interface(name: string): string;
-  property(name: string): string;
-  udt(name: string): string;
+export abstract class NamingStrategy {
+  public abstract enum(name: string): string;
+  public abstract namespace(name: string): string;
+  public abstract type(name: string): string;
+  public abstract interface(name: string): string;
+  public abstract property(name: string): string;
+  public abstract udt(name: string): string;
 }
 
 export { CamelCaseNamingStrategy } from './camel-case';

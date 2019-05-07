@@ -50,16 +50,16 @@ describe('table', () => {
       const source = code.table(tables[0]);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type created_at = Date | null;
-          export type status = enum_user_status | null;
+          export type status = EnumUserStatus | null;
         }
 
-        export interface users {
-          id: users_fields.id;
-          created_at: users_fields.created_at;
-          status: users_fields.status;
+        export interface Users {
+          id: UsersFields.id;
+          created_at: UsersFields.created_at;
+          status: UsersFields.status;
         }
       `);
     });
@@ -112,19 +112,19 @@ describe('table', () => {
       const source = code.table(tables[0]);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type created_at = Date | null;
-          export type status = enum_user_status | null;
+          export type status = EnumUserStatus | null;
         }
 
-        export interface users {
+        export interface Users {
           /** @type int4 */
-          id: users_fields.id;
+          id: UsersFields.id;
           /** @type timestamp @default now() */
-          created_at: users_fields.created_at;
+          created_at: UsersFields.created_at;
           /** @type enum_user_status */
-          status: users_fields.status;
+          status: UsersFields.status;
         }
       `);
     });
@@ -178,16 +178,16 @@ describe('table', () => {
       const source = code.table(tables[0]);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type created_at<T = object> = T | null;
-          export type status = enum_user_status | null;
+          export type status = EnumUserStatus | null;
         }
 
-        export interface users<created_at_type = object> {
-          id: users_fields.id;
-          created_at: users_fields.created_at<created_at_type>;
-          status: users_fields.status;
+        export interface Users<CreatedAtType = object> {
+          id: UsersFields.id;
+          created_at: UsersFields.created_at<CreatedAtType>;
+          status: UsersFields.status;
         }
       `);
     });
@@ -236,19 +236,19 @@ describe('table', () => {
       const source = code.table(tables[0]);
 
       expect(source).toBe(dedent`
-        export namespace users_fields {
+        export namespace UsersFields {
           export type id = number;
           export type created_at<T = object> = T | null;
-          export type status = enum_user_status | null;
+          export type status = EnumUserStatus | null;
         }
 
-        export interface users<created_at_type = object> {
+        export interface Users<CreatedAtType = object> {
           /** @type int4 */
-          id: users_fields.id;
+          id: UsersFields.id;
           /** @type json */
-          created_at: users_fields.created_at<created_at_type>;
+          created_at: UsersFields.created_at<CreatedAtType>;
           /** @type enum_user_status */
-          status: users_fields.status;
+          status: UsersFields.status;
         }
       `);
     });

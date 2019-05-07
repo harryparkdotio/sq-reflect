@@ -15,6 +15,26 @@ $ npm i -g sq-reflect
 $ yarn global add sq-reflect
 ```
 
+## cli
+
+```bash
+sq-reflect [options]
+
+Options:
+  --help, -h         help                                              [boolean]
+  --version, -v      version                                           [boolean]
+  --conn, -c                                                 [string] [required]
+  --filename, -f                                 [string] [default: "schema.ts"]
+  --no-meta, -M      do not emit metadata             [boolean] [default: false]
+  --no-generics, -G  do not emit type generics        [boolean] [default: false]
+  --schema, -s       schema                         [string] [default: "public"]
+  --snake
+  --camel
+
+Examples:
+  sq-reflect --conn postgres://postgres@localhost:5432/db
+```
+
 ## example
 
 ```sql
@@ -25,7 +45,7 @@ CREATE TYPE enum_user_status AS ENUM (
   'DISABLED'
 );
 
-CREATE TABLE "users" (
+CREATE TABLE "user" (
   id uuid PRIMARY KEY,
   status enum_user_status not null default 'PENDING',
   created_at timestamp,
@@ -36,34 +56,34 @@ CREATE TABLE "users" (
 ```
 
 ```ts
-export enum enum_user_status {
+export enum EnumUserStatus {
   PENDING = 'PENDING',
   VERIFIED = 'VERIFIED',
   FAILED = 'FAILED',
   DISABLED = 'DISABLED',
 }
 
-export namespace users_fields {
+export namespace UserFields {
   export type id = string;
-  export type status = enum_user_status;
+  export type status = EnumUserStatus;
   export type created_at = Date | null;
   export type default_ = boolean;
   export type data<T = object> = T;
   export type col<T = any> = T;
 }
 
-export interface users<data_type, col_type> {
+export interface User<DataType, ColType> {
   /** @type uuid */
-  id: users_fields.id;
+  id: UserFields.id;
   /** @type enum_user_status */
-  status: users_fields.status;
+  status: UserFields.status;
   /** @type timestamp */
-  created_at: users_fields.created_at;
+  created_at: UserFields.created_at;
   /** @type boolean */
-  default: users_fields.default_;
+  default: UserFields.default_;
   /** @type json */
-  data: users_fields.data<data_type>;
+  data: UserFields.data<DataType>;
   /** @type unknown_type */
-  col: users_fields.col<col_type>;
+  col: UserFields.col<ColType>;
 }
 ```
