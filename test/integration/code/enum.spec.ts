@@ -31,7 +31,7 @@ describe('enum', () => {
     const source = new Code({ namingStrategy: new SnakeCaseNamingStrategy() }).enum(enums[0]);
 
     expect(source).toBe(dedent`
-      export enum enum_user_status {
+      export enum EnumUserStatus {
         DISABLED = 'DISABLED',
         FAILED = 'FAILED',
         PENDING = 'PENDING',

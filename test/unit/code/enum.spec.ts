@@ -16,7 +16,7 @@ describe('enum', () => {
     const source = code.enum(definition);
 
     expect(source).toBe(dedent`
-      export enum users_status {
+      export enum UsersStatus {
         DISABLED = 'DISABLED',
         PENDING = 'PENDING',
         VERIFIED = 'VERIFIED',
@@ -54,7 +54,7 @@ describe('enum', () => {
     const source = code.enum(definition);
 
     expect(source).toBe(dedent`
-      export enum default_ {
+      export enum Default {
         DISABLED = 'DISABLED',
         PENDING = 'PENDING',
         VERIFIED = 'VERIFIED',

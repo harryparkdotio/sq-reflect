@@ -59,7 +59,7 @@ export class Code {
     const cols = definition.columns.map<Cols>(col => ({
       type: this.type(col.type),
       prop: this.ns.property(col.name),
-      ref: Transform.reserved(this.ns.type(col.name)),
+      ref: Transform.reserved(this.ns.property(col.name)),
       meta: { type: col.type.sql, ...(col.type.default && { default: col.type.default }) },
       generic:
         this.opt.generics && genericableTypes.includes(this.type(col.type).type) ? this.ns.udt(col.name + '_type') : '',

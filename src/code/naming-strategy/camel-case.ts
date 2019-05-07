@@ -2,7 +2,7 @@ import { Transform } from '../../transform';
 
 import { NamingStrategy } from '.';
 
-export class CamelCaseNamingStrategy implements NamingStrategy {
+export class CamelCaseNamingStrategy extends NamingStrategy {
   enum(name: string) {
     return Transform.pascal(name);
   }
