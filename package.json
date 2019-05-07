@@ -1,6 +1,6 @@
 {
   "name": "sq-reflect",
-  "version": "1.0.0-1",
+  "version": "1.1.0",
   "main": "index.js",
   "description": "sql typescript type generator",
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
