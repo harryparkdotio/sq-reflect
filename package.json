@@ -5,7 +5,43 @@
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
   "author": "Harry Park <harry@harrypark.io>",
   "license": "MIT",
-  "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "jest",
+    "lint": "eslint 'src/**/*.ts'"
+  },
+  "dependencies": {
+    "typescript": "^3.4.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.13",
+    "@types/node": "^12.0.2",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "husky": "^2.3.0",
+    "jest": "^24.8.0",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1",
+    "ts-jest": "^24.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{json,md,yaml,yml}": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.{js,ts}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
+  }
 }
