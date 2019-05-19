@@ -1,0 +1,27 @@
+version: 2
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/postgres:10
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+    environment:
+      DB_USER: postgres
+      DB_NAME: test
+      DB_PORT: '5432'
+      DB_HOST: localhost
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn build
+      - run: yarn lint
+      - run: yarn test
