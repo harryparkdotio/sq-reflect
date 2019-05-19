@@ -1,7 +1,10 @@
 import * as dedent from 'dedent';
 
 import { Code } from '../../../src/code';
-import { CamelCaseNamingStrategy, SnakeCaseNamingStrategy } from '../../../src/code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  SnakeCaseNamingStrategy,
+} from '../../../src/code/naming-strategy';
 import { EnumDefinition } from '../../../src/sql/definitions';
 
 describe('enum', () => {

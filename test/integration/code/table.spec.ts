@@ -1,7 +1,10 @@
 import * as dedent from 'dedent';
 
 import { Code } from '../../../src/code';
-import { CamelCaseNamingStrategy, SnakeCaseNamingStrategy } from '../../../src/code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  SnakeCaseNamingStrategy,
+} from '../../../src/code/naming-strategy';
 import { Postgres } from '../../../src/driver/postgres';
 import { Meta } from '../../../src/sql/meta';
 
@@ -36,8 +39,12 @@ afterEach(async () => {
 describe('table', () => {
   describe('source', () => {
     it('should return table source using SnakeCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp, status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
 
@@ -65,7 +72,9 @@ describe('table', () => {
     });
 
     it('should return table source using CamelCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
       await db.query(
         `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
       );
@@ -97,7 +106,9 @@ describe('table', () => {
 
   describe('metadata', () => {
     it('should return table source with metadata using SnakeCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
       await db.query(
         `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
       );
@@ -105,7 +116,10 @@ describe('table', () => {
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitMetadata: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 
@@ -130,7 +144,9 @@ describe('table', () => {
     });
 
     it('should return table source with metadata using CamelCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
       await db.query(
         `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
       );
@@ -138,7 +154,10 @@ describe('table', () => {
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitMetadata: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 
@@ -165,13 +184,20 @@ describe('table', () => {
 
   describe('generics', () => {
     it('should return table source with generics using SnakeCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 
@@ -193,13 +219,20 @@ describe('table', () => {
     });
 
     it('should return table source with generics using CamelCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 
@@ -223,13 +256,21 @@ describe('table', () => {
 
   describe('metadata + generics', () => {
     it('should return table source with metadata + generics using SnakeCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        emitMetadata: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 
@@ -254,13 +295,21 @@ describe('table', () => {
     });
 
     it('should return table source with metadata + generics using CamelCaseNamingStrategy', async () => {
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TABLE "users" (id int PRIMARY KEY, created_at json, status enum_user_status);`
+      );
 
       const tables = await meta.Tables();
       const enums = await meta.Enums();
 
-      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        emitMetadata: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define(enums[0].name);
 

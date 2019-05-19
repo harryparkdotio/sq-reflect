@@ -1,8 +1,12 @@
 import { Driver } from '../../../src/driver/interfaces';
-import { RawEnumDefinition, RawTableDefinition, TableDefinition } from '../../../src/sql/definitions';
+import {
+  RawEnumDefinition,
+  RawTableDefinition,
+  TableDefinition,
+} from '../../../src/sql/definitions';
 import { Meta } from '../../../src/sql/meta';
 
-let queryResultMock = [];
+let queryResultMock: any[] = [];
 
 const PostgresMock: Driver = {
   connect: () => Promise.resolve(),
@@ -49,7 +53,9 @@ describe('Meta', () => {
 
       await meta.Enums();
 
-      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['public']);
+      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual([
+        'public',
+      ]);
     });
 
     it('should call db.query with params', async () => {
@@ -57,7 +63,9 @@ describe('Meta', () => {
 
       await meta.Enums();
 
-      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['not_public']);
+      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual([
+        'not_public',
+      ]);
     });
   });
 
@@ -152,7 +160,9 @@ describe('Meta', () => {
 
       await meta.Tables();
 
-      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['public']);
+      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual([
+        'public',
+      ]);
     });
 
     it('should call db.query with params', async () => {
@@ -162,7 +172,9 @@ describe('Meta', () => {
 
       await meta.Tables();
 
-      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual(['not_public']);
+      expect((PostgresMock.query as jest.Mock).mock.calls[0][1]).toEqual([
+        'not_public',
+      ]);
     });
   });
 });

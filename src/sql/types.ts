@@ -23,7 +23,16 @@ export const typeMaps: TypeMap[] = [
   },
   {
     type: 'number',
-    types: ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric', 'money', 'oid'],
+    types: [
+      'int2',
+      'int4',
+      'int8',
+      'float4',
+      'float8',
+      'numeric',
+      'money',
+      'oid',
+    ],
   },
   {
     type: 'boolean',
@@ -39,7 +48,15 @@ export const typeMaps: TypeMap[] = [
   },
   {
     type: 'number[]',
-    types: ['_int2', '_int4', '_int8', '_float4', '_float8', '_numeric', '_money'],
+    types: [
+      '_int2',
+      '_int4',
+      '_int8',
+      '_float4',
+      '_float8',
+      '_numeric',
+      '_money',
+    ],
   },
   {
     type: 'boolean[]',

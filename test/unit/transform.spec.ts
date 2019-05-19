@@ -7,9 +7,12 @@ import { Transform } from '../../src/transform';
 
 describe('transform', () => {
   describe('reserved', () => {
-    it.each(reservedKeywords)("should suffix reserved keyword with '_' for '%s'", keyword => {
-      expect(Transform.reserved(keyword)).toBe(`${keyword}_`);
-    });
+    it.each(reservedKeywords)(
+      "should suffix reserved keyword with '_' for '%s'",
+      keyword => {
+        expect(Transform.reserved(keyword)).toBe(`${keyword}_`);
+      }
+    );
 
     it("should not suffix non reserved keyword with '_'", () => {
       expect(Transform.reserved('abcd')).toBe('abcd');

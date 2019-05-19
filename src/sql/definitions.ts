@@ -3,7 +3,7 @@ export interface TypeDefinition {
   alt: string | null;
   nullable: boolean;
   schema: string;
-  type: string;
+  type: string | null;
   default: string | null;
 }
 

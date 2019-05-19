@@ -1,7 +1,10 @@
 import * as dedent from 'dedent';
 
 import { Code } from '../../../src/code';
-import { CamelCaseNamingStrategy, SnakeCaseNamingStrategy } from '../../../src/code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  SnakeCaseNamingStrategy,
+} from '../../../src/code/naming-strategy';
 import { Postgres } from '../../../src/driver/postgres';
 import { Meta } from '../../../src/sql/meta';
 
@@ -24,11 +27,15 @@ afterEach(async () => {
 
 describe('enum', () => {
   it('should return enum source using SnakeCaseNamingStrategy', async () => {
-    await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+    await db.query(
+      `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+    );
 
     const enums = await meta.Enums();
 
-    const source = new Code({ namingStrategy: new SnakeCaseNamingStrategy() }).enum(enums[0]);
+    const source = new Code({
+      namingStrategy: new SnakeCaseNamingStrategy(),
+    }).enum(enums[0]);
 
     expect(source).toBe(dedent`
       export enum EnumUserStatus {
@@ -41,11 +48,15 @@ describe('enum', () => {
   });
 
   it('should return enum source using CamelCaseNamingStrategy', async () => {
-    await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+    await db.query(
+      `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+    );
 
     const enums = await meta.Enums();
 
-    const source = new Code({ namingStrategy: new CamelCaseNamingStrategy() }).enum(enums[0]);
+    const source = new Code({
+      namingStrategy: new CamelCaseNamingStrategy(),
+    }).enum(enums[0]);
 
     expect(source).toBe(dedent`
       export enum EnumUserStatus {

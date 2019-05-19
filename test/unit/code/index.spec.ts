@@ -4,6 +4,7 @@ import { SnakeCaseNamingStrategy } from '../../../src/code/naming-strategy';
 describe('code', () => {
   describe('define', () => {
     it('should define udt', () => {
+      // @ts-ignore
       const spy = jest.spyOn(Array.prototype, 'push');
       const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
       const definition = 'enum_user_status';
@@ -19,7 +20,9 @@ describe('code', () => {
   describe('meta', () => {
     it('should return inline jsdoc string', () => {
       const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
-      expect(code.meta({ type: 'a', default: 'b' })).toBe('/** @type a @default b */');
+      expect(code.meta({ type: 'a', default: 'b' })).toBe(
+        '/** @type a @default b */'
+      );
     });
   });
 });

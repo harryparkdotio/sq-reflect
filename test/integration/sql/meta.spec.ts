@@ -33,7 +33,9 @@ describe('Meta', () => {
     it('should return an array of EnumDefinitions', async () => {
       const meta = new Meta(db);
 
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
 
       const enums = await meta.Enums();
 
@@ -59,8 +61,12 @@ describe('Meta', () => {
     it('should return an array of TableDefinitions', async () => {
       const meta = new Meta(db);
 
-      await db.query(`CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`);
-      await db.query(`CREATE TYPE enum_comment_type AS ENUM ('PUBLIC', 'PRIVATE');`);
+      await db.query(
+        `CREATE TYPE enum_user_status AS ENUM ('PENDING', 'VERIFIED', 'FAILED', 'DISABLED');`
+      );
+      await db.query(
+        `CREATE TYPE enum_comment_type AS ENUM ('PUBLIC', 'PRIVATE');`
+      );
       await db.query(
         `CREATE TABLE "users" (id int PRIMARY KEY, created_at timestamp default now(), status enum_user_status);`
       );

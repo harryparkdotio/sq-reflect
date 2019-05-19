@@ -2,7 +2,11 @@ import { source } from 'common-tags';
 import * as fse from 'fs-extra';
 
 import { Code } from './code';
-import { CamelCaseNamingStrategy, NamingStrategy, SnakeCaseNamingStrategy } from './code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  NamingStrategy,
+  SnakeCaseNamingStrategy,
+} from './code/naming-strategy';
 import { Driver } from './driver/interfaces';
 import { Postgres } from './driver/postgres';
 import { EnumDefinition, TableDefinition } from './sql/definitions';
@@ -12,7 +16,7 @@ interface Options {
   conn: string;
   schema: string;
   filename: string;
-  case: string;
+  case: string | boolean;
   meta: boolean;
   generics: boolean;
 }
@@ -25,7 +29,7 @@ interface Data {
 export class SqReflect {
   private db: Driver;
   private meta: Meta;
-  private data: Data;
+  private data: Data | undefined;
   public content?: string;
   private filename: string;
   private code: Code;
@@ -65,7 +69,7 @@ export class SqReflect {
     };
 
     if (this.data.tables.length === 0) {
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.warn('no tables were found.');
     }
 
@@ -74,6 +78,9 @@ export class SqReflect {
 
   async compile() {
     const code = this.code;
+    if (!this.data) {
+      return;
+    }
     const { enums, tables } = this.data;
 
     // define custom types
@@ -87,7 +94,10 @@ export class SqReflect {
       /* eslint-disable */
       /* tslint:disable */
 
-      ${[...enums.map(e => code.enum(e)), ...tables.map(t => code.table(t))].join('\n\n')}
+      ${[
+        ...enums.map(e => code.enum(e)),
+        ...tables.map(t => code.table(t)),
+      ].join('\n\n')}
     `;
   }
 
