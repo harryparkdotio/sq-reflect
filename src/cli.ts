@@ -87,12 +87,12 @@ async function run(v: Opt) {
 // @ts-ignore
 run(argv)
   .then(() => {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.log('done');
     process.exit();
   })
   .catch((e: Error) => {
-    // tslint:disable-next-line:no-console
+    // eslint-disable-next-line no-console
     console.warn(e.message || e);
     process.exit(1);
   });

@@ -1,7 +1,8 @@
+import * as path from 'path';
+import * as os from 'os';
+
 import { source } from 'common-tags';
 import * as fse from 'fs-extra';
-import * as os from 'os';
-import * as path from 'path';
 
 import { SqReflect } from '../../src';
 import { Driver } from '../../src/driver/interfaces';
@@ -10,7 +11,7 @@ import { Postgres } from '../../src/driver/postgres';
 const connectionString = 'postgres://postgres@localhost:5432/test';
 
 async function up(d: Pick<Driver, 'query'>) {
-  return await d.query(`
+  return d.query(`
     CREATE TABLE IF NOT EXISTS "user" (
       id serial PRIMARY KEY,
       first_name varchar not null,
@@ -41,7 +42,7 @@ async function up(d: Pick<Driver, 'query'>) {
 }
 
 async function down(d: Pick<Driver, 'query'>) {
-  return await d.query(`
+  return d.query(`
     DROP TABLE IF EXISTS "transaction";
     DROP TYPE IF EXISTS enum_transaction_type;
     DROP TABLE IF EXISTS "user";

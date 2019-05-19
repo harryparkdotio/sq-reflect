@@ -3,7 +3,6 @@ import * as dedent from 'dedent';
 import { Driver } from '../driver/interfaces';
 
 import { typeMaps } from './types';
-
 import {
   ColumnDefinition,
   EnumDefinition,

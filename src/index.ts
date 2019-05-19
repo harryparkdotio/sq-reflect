@@ -65,7 +65,7 @@ export class SqReflect {
     };
 
     if (this.data.tables.length === 0) {
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.warn('no tables were found.');
     }
 
