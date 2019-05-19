@@ -18,7 +18,10 @@ interface MetaOptions {
 export class Meta {
   private schema: string;
 
-  constructor(protected readonly db: Driver, options: Partial<MetaOptions> = {}) {
+  constructor(
+    protected readonly db: Driver,
+    options: Partial<MetaOptions> = {}
+  ) {
     this.schema = options.schema || Meta.defaultSchema;
   }
 
@@ -38,7 +41,9 @@ export class Meta {
       GROUP BY t.typname
       ORDER BY t.typname ASC;`;
 
-    const definitions: RawEnumDefinition[] = await this.db.query(sql, [this.schema]);
+    const definitions: RawEnumDefinition[] = await this.db.query(sql, [
+      this.schema,
+    ]);
 
     return definitions.map<EnumDefinition>(definition => ({
       schema: this.schema,
@@ -79,7 +84,9 @@ export class Meta {
       ORDER BY
         c.table_name;`;
 
-    const definitions: RawTableDefinition[] = await this.db.query(sql, [this.schema]);
+    const definitions: RawTableDefinition[] = await this.db.query(sql, [
+      this.schema,
+    ]);
 
     return definitions.map<TableDefinition>(definition => ({
       name: definition.name,
@@ -90,7 +97,11 @@ export class Meta {
           alt: columnDefinition.alt,
           sql: columnDefinition.type,
           nullable: columnDefinition.nullable,
-          type: (typeMaps.find(t => t.types.includes(columnDefinition.type)) || { type: null }).type,
+          type: (
+            typeMaps.find(t => t.types.includes(columnDefinition.type)) || {
+              type: null,
+            }
+          ).type,
           schema: columnDefinition.typeSchema,
           default: columnDefinition.default,
         },

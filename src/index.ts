@@ -2,7 +2,11 @@ import { source } from 'common-tags';
 import * as fse from 'fs-extra';
 
 import { Code } from './code';
-import { CamelCaseNamingStrategy, NamingStrategy, SnakeCaseNamingStrategy } from './code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  NamingStrategy,
+  SnakeCaseNamingStrategy,
+} from './code/naming-strategy';
 import { Driver } from './driver/interfaces';
 import { Postgres } from './driver/postgres';
 import { EnumDefinition, TableDefinition } from './sql/definitions';
@@ -87,7 +91,10 @@ export class SqReflect {
       /* eslint-disable */
       /* tslint:disable */
 
-      ${[...enums.map(e => code.enum(e)), ...tables.map(t => code.table(t))].join('\n\n')}
+      ${[
+        ...enums.map(e => code.enum(e)),
+        ...tables.map(t => code.table(t)),
+      ].join('\n\n')}
     `;
   }
 

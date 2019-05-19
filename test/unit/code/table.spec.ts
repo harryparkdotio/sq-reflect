@@ -1,7 +1,10 @@
 import * as dedent from 'dedent';
 
 import { Code } from '../../../src/code';
-import { CamelCaseNamingStrategy, SnakeCaseNamingStrategy } from '../../../src/code/naming-strategy';
+import {
+  CamelCaseNamingStrategy,
+  SnakeCaseNamingStrategy,
+} from '../../../src/code/naming-strategy';
 import { TableDefinition } from '../../../src/sql/definitions';
 
 const definition: TableDefinition = {
@@ -267,7 +270,10 @@ describe('table', () => {
 
   describe('metadata', () => {
     it('should return table source with metadata using SnakeCaseNamingStrategy', () => {
-      const code = new Code({ emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitMetadata: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 
@@ -295,7 +301,10 @@ describe('table', () => {
     });
 
     it('should return table source with metadata using CamelCaseNamingStrategy', () => {
-      const code = new Code({ emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitMetadata: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 
@@ -325,7 +334,10 @@ describe('table', () => {
 
   describe('generics', () => {
     it('should return table source with generics using SnakeCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 
@@ -349,7 +361,10 @@ describe('table', () => {
     });
 
     it('should return table source with generics using CamelCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 
@@ -373,7 +388,10 @@ describe('table', () => {
     });
 
     it('should return table source with multiple generics using SnakeCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       const source = code.table(genericsDefinition);
 
@@ -395,7 +413,10 @@ describe('table', () => {
     });
 
     it('should return table source with multiple generics using CamelCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       const source = code.table(genericsDefinition);
 
@@ -419,7 +440,11 @@ describe('table', () => {
 
   describe('metadata + generics', () => {
     it('should return table source with metadata + generics using SnakeCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new SnakeCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        emitMetadata: true,
+        namingStrategy: new SnakeCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 
@@ -447,7 +472,11 @@ describe('table', () => {
     });
 
     it('should return table source with metadata + generics using CamelCaseNamingStrategy', () => {
-      const code = new Code({ emitGenerics: true, emitMetadata: true, namingStrategy: new CamelCaseNamingStrategy() });
+      const code = new Code({
+        emitGenerics: true,
+        emitMetadata: true,
+        namingStrategy: new CamelCaseNamingStrategy(),
+      });
 
       code.define('user_status');
 

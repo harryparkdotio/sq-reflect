@@ -20,7 +20,9 @@ describe('code', () => {
   describe('meta', () => {
     it('should return inline jsdoc string', () => {
       const code = new Code({ namingStrategy: new SnakeCaseNamingStrategy() });
-      expect(code.meta({ type: 'a', default: 'b' })).toBe('/** @type a @default b */');
+      expect(code.meta({ type: 'a', default: 'b' })).toBe(
+        '/** @type a @default b */'
+      );
     });
   });
 });
