@@ -1,15 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "allowUnreachableCode": false,
     "noEmit": false,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
     "outDir": "dist",
-    "preserveConstEnums": true
+    "declaration": true
   },
   "include": ["src"]
 }

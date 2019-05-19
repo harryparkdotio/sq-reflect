@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "importHelpers": true,
+    "lib": ["es2018"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "removeComments": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "lib": ["es2018"],
-    "suppressImplicitAnyIndexErrors": true
+    "strict": true,
+    "target": "es6"
   },
   "include": ["src", "test"]
 }

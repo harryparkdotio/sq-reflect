@@ -16,7 +16,7 @@ interface Options {
   conn: string;
   schema: string;
   filename: string;
-  case: string;
+  case: string | boolean;
   meta: boolean;
   generics: boolean;
 }
@@ -29,7 +29,7 @@ interface Data {
 export class SqReflect {
   private db: Driver;
   private meta: Meta;
-  private data: Data;
+  private data: Data | undefined;
   public content?: string;
   private filename: string;
   private code: Code;
@@ -78,6 +78,9 @@ export class SqReflect {
 
   async compile() {
     const code = this.code;
+    if (!this.data) {
+      return;
+    }
     const { enums, tables } = this.data;
 
     // define custom types

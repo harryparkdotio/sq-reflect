@@ -6,7 +6,7 @@ import {
 } from '../../../src/sql/definitions';
 import { Meta } from '../../../src/sql/meta';
 
-let queryResultMock = [];
+let queryResultMock: any[] = [];
 
 const PostgresMock: Driver = {
   connect: () => Promise.resolve(),

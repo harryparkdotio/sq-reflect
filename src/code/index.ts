@@ -92,7 +92,7 @@ export class Code {
       }
 
       export interface ${_interface}${generics ? `<${generics}>` : ''} {
-        ${[].concat(
+        ${([] as string[]).concat(
           ...cols.map(({ generic, meta, prop, ref }) =>
             [
               `${this.opt.meta && meta ? this.meta(meta) : ''}`,
