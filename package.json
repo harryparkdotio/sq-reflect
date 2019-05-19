@@ -1,0 +1,11 @@
+{
+  "name": "sq-reflect",
+  "version": "0.0.0",
+  "description": "postgres typescript type generator",
+  "repository": "git@github.com:harryparkdotio/sq-reflect.git",
+  "author": "Harry Park <harry@harrypark.io>",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {}
+}
