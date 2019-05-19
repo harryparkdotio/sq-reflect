@@ -8,6 +8,8 @@ module.exports = {
   coverageReporters: ['lcov', 'text-summary'],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/dist'],
+  setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+  testEnvironment: 'node',
   transform: {
     '^.+\\.ts$': 'ts-jest',
   },
