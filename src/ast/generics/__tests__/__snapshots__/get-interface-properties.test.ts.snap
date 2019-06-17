@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getGenericInterfacePropertiesFromTypeParameters should 1`] = `
+Array [
+  Array [
+    AbcdType = any,
+  ],
+  Array [
+    AbcdType,
+  ],
+]
+`;
+
+exports[`getGenericInterfacePropertiesFromTypeParameters should 2`] = `
+Array [
+  Array [
+    Abcd_0Type = any,
+    Abcd_1Type = string | object,
+  ],
+  Array [
+    Abcd_0Type,
+    Abcd_1Type,
+  ],
+]
+`;

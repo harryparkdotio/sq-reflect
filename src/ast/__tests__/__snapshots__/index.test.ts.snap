@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildAst should 1`] = `
+Array [
+  export namespace UserFields {
+    export type id = string;
+    export type default_<T = any> = T;
+    export type metadata<T = object> = T;
+    export type createdAt = Date;
+    export type deletedAt = Date | null;
+},
+  export interface User<DefaultType = any, MetadataType = object> {
+    id: UserFields.id;
+    default: UserFields.default_<DefaultType>;
+    metadata: UserFields.metadata<MetadataType>;
+    created_at: UserFields.createdAt;
+    deleted_at: UserFields.deletedAt;
+},
+]
+`;

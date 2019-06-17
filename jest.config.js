@@ -9,6 +9,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/dist'],
   setupFilesAfterEnv: ['<rootDir>/test/setup.ts'],
+  snapshotSerializers: ['ts-ast-serializer'],
   testEnvironment: 'node',
   transform: {
     '^.+\\.ts$': 'ts-jest',
