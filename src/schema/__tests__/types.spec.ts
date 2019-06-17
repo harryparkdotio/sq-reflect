@@ -1,6 +1,6 @@
 import * as ts from 'typescript';
 
-import { getTypeFromOid } from '../types';
+import { getTypeFromOid, addTypeByOid } from '../types';
 
 describe('getTypeFromOid', () => {
   it('should return null when oid = 0 (unknown)', () => {
@@ -61,5 +61,15 @@ describe('getTypeFromOid', () => {
     expect(typeFromOid).not.toBeNull();
     expect(ts.isTypeNode(typeFromOid)).toBeTruthy();
     expect(typeFromOid.kind).toEqual(ts.SyntaxKind.ArrayType);
+  });
+});
+
+describe('addTypeByOid', () => {
+  it('should throw when oid already exists', () => {
+    const oid = 100000;
+    const type = ts.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+    addTypeByOid(oid, type);
+
+    expect(() => addTypeByOid(oid, type)).toThrowError('type already exists!');
   });
 });

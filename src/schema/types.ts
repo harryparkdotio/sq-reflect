@@ -142,3 +142,11 @@ const oidMap: { [oid: number]: ts.TypeNode } = {
 export const getTypeFromOid = (oid: number): ts.TypeNode | null => {
   return oidMap[oid] || null;
 };
+
+export const addTypeByOid = (oid: number, node: ts.TypeNode) => {
+  if (oidMap[oid]) {
+    throw new Error('type already exists!');
+  }
+
+  oidMap[oid] = node;
+};
