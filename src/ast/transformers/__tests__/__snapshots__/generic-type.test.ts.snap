@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`genericTypeTransformer should 1`] = `
+Array [
+  Array<Record<7, any>>,
+]
+`;
+
+exports[`genericTypeTransformer should 2`] = `Array []`;
+
+exports[`genericTypeTransformer should not transform generic types in type literal from primitive to generic 1`] = `
+Array [
+  {
+    a: any;
+    b: string;
+},
+]
+`;
+
+exports[`genericTypeTransformer should not transform generic types in type literal from primitive to generic 2`] = `Array []`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 1`] = `
+Array [
+  T[],
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 2`] = `
+Array [
+  T = any,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 3`] = `
+Array [
+  T | T,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 4`] = `
+Array [
+  T = any,
+  T = object,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 5`] = `
+Array [
+  T & T,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 6`] = `
+Array [
+  T = any,
+  T = object,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 7`] = `
+Array [
+  string,
+]
+`;
+
+exports[`genericTypeTransformer should transform generic types from primitive to generic 8`] = `Array []`;
