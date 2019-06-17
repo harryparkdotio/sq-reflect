@@ -1,8 +1,9 @@
 import * as ts from 'typescript';
+import * as Case from 'change-case';
+
 import { ClassDefinition, AttributeDefinition } from '../schema/definitions';
 import { getTypeFromOid } from '../schema/types';
 
-import * as Case from 'change-case';
 import { genericTypeTransformer } from './transformers/generic-type';
 import { isIdentifier } from './identifiers';
 

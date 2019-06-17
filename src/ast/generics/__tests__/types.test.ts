@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+
 import { isGenericType } from '../types';
 
 describe('isGenericType', () => {

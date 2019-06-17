@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+
 import { genericTypeTransformer } from '../generic-type';
 
 const transform = <T extends ts.Node>(

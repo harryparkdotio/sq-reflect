@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+
 import { getGenericInterfacePropertiesFromTypeParameters } from '../get-interface-properties';
 
 describe('getGenericInterfacePropertiesFromTypeParameters', () => {

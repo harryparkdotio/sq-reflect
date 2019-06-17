@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+
 import { isGenericType } from '../generics/types';
 
 export const genericTypeTransformer = <T extends ts.Node>(

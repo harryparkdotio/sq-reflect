@@ -1,4 +1,5 @@
 import * as ts from 'typescript';
+
 import { Transform } from '..';
 
 export const getGenericInterfacePropertiesFromTypeParameters = (

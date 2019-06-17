@@ -1,4 +1,5 @@
 import { buildAst } from '..';
+
 import { ClassType } from '../../schema/definitions';
 
 describe('buildAst', () => {
