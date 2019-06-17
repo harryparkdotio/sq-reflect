@@ -1,13 +1,19 @@
 import * as ts from 'typescript';
 import * as Case from 'change-case';
 
-import { ClassDefinition, AttributeDefinition } from '../schema/definitions';
-import { getTypeFromOid } from '../schema/types';
+import {
+  ClassDefinition,
+  AttributeDefinition,
+  EnumDefinition,
+} from '../schema/definitions';
+import { getTypeFromOid, addTypeByOid } from '../schema/types';
 
 import { genericTypeTransformer } from './transformers/generic-type';
 import { isIdentifier } from './identifiers';
 
 export const Transform = {
+  enumName: (text: string) => Case.pascal(text),
+  enumMember: (text: string) => Case.constant(text),
   namespaceName: (text: string) => Case.pascal(text),
   namespaceTypeAliasName: (text: string) => Case.camel(text),
   interfaceName: (text: string) => Case.pascal(text),
@@ -80,8 +86,38 @@ const getGenericInterfacePropertyTypeParametersFrom = (
 const makeIdentifier = (s: string): ts.Identifier =>
   (isIdentifier(s) && ts.createIdentifier(s)) || makeIdentifier(s + '_');
 
-export const buildAst = (classes: ClassDefinition[]) => {
+export const buildAst = (
+  classes: ClassDefinition[],
+  enums: EnumDefinition[]
+) => {
   const statements: ts.Statement[] = [];
+
+  enums.forEach(enm => {
+    const enumDeclaration = ts.createEnumDeclaration(
+      undefined,
+      [ts.createToken(ts.SyntaxKind.ExportKeyword)],
+      ts.createIdentifier(Transform.enumName(enm.name)),
+      enm.values.map(value =>
+        ts.createEnumMember(
+          makeIdentifier(Transform.enumMember(value)),
+          ts.createStringLiteral(value)
+        )
+      )
+    );
+
+    const enumTypeReference = ts.createTypeReferenceNode(
+      enumDeclaration.name,
+      undefined
+    );
+
+    addTypeByOid(enm.id, enumTypeReference);
+
+    if (enm.arr_id) {
+      addTypeByOid(enm.arr_id, ts.createArrayTypeNode(enumTypeReference));
+    }
+
+    statements.push(enumDeclaration);
+  });
 
   classes.forEach(_class => {
     const namespaceNameIdentifier = ts.createIdentifier(
