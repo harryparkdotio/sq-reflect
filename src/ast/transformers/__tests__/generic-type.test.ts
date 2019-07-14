@@ -13,8 +13,13 @@ describe('genericTypeTransformer', () => {
       ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
     );
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
@@ -28,8 +33,13 @@ describe('genericTypeTransformer', () => {
       ts.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
     ]);
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
@@ -43,8 +53,13 @@ describe('genericTypeTransformer', () => {
       ts.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
     ]);
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
@@ -55,8 +70,13 @@ describe('genericTypeTransformer', () => {
   test('should transform generic types from primitive to generic', () => {
     const node = ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
@@ -82,8 +102,13 @@ describe('genericTypeTransformer', () => {
       ),
     ]);
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
@@ -99,8 +124,13 @@ describe('genericTypeTransformer', () => {
       ]),
     ]);
 
+    const attributeName = 'test';
+
     const typeParameterReferenceArray: ts.TypeParameterDeclaration[] = [];
-    const transformer = genericTypeTransformer(typeParameterReferenceArray);
+    const transformer = genericTypeTransformer(
+      attributeName,
+      typeParameterReferenceArray
+    );
 
     const result = transform(node, transformer);
 
