@@ -5,9 +5,11 @@
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
   "author": "Harry Park <harry@harrypark.io>",
   "license": "MIT",
-  "bin": "./.bin",
+  "bin": {
+    "sq-reflect": "./cli.js"
+  },
   "files": [
-    ".bin",
+    "cli.js",
     "dist"
   ],
   "scripts": {
