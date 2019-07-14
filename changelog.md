@@ -1,3 +1,8 @@
+# v2.1.0 / 2019-07-14
+
+- chore(release): v2.1.0
+- fix: attribute order
+
 # v2.0.2 / 2019-07-14
 
 - chore(release): v2.0.2
