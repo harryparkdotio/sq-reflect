@@ -1,6 +1,6 @@
 {
   "name": "sq-reflect",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "description": "postgres typescript type generator",
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
   "author": "Harry Park <harry@harrypark.io>",
@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.2",
     "@types/meow": "^5.0.0",
+    "@types/node": "^12.6.2",
     "@types/pg": "^7.4.14",
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
