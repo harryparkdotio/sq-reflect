@@ -1,6 +1,7 @@
+import * as fs from 'fs';
+
 import * as meow from 'meow';
 import * as pg from 'pg';
-import * as fs from 'fs';
 
 import * as ast from './ast';
 import * as schema from './schema/schema';
@@ -13,8 +14,8 @@ const cli = meow(
  
     Options
       --conn, -c  postgres connection string
-      --file, -f  filename to save generated types
-      --schema, -s  postgres schema
+      --file, -f  filename to save generated types  [string] [default: schema.ts]
+      --schema, -s  postgres schema                 [string] [default: public]
  
     Examples
       $ sq-reflect --conn <conn> --file schema.ts
@@ -36,24 +37,36 @@ const cli = meow(
         alias: 's',
         default: 'public',
       },
+      file: {
+        type: 'string',
+        alias: 'f',
+        default: 'schema.ts',
+      },
     },
   }
 );
 
 const run = async (cli: meow.Result) => {
+  const { conn, file, schema: userSchema } = cli.flags;
+
+  if (!conn) {
+    console.error('--conn is required');
+    cli.showHelp(1);
+  }
+
   const client = new pg.Client(cli.flags.conn);
 
   await client.connect();
 
-  const classes = await schema.getClasses(client, cli.flags.schema);
-  const enums = await schema.getEnums(client, cli.flags.schema);
+  const classes = await schema.getClasses(client, userSchema);
+  const enums = await schema.getEnums(client, userSchema);
 
   await client.end();
 
   const statements = ast.buildAst(classes, enums);
   const strings = astWriter(statements).join('\n\n');
 
-  fs.writeFileSync(cli.flags.file, strings);
+  fs.writeFileSync(file, strings);
 };
 
 run(cli).catch(err => {
