@@ -21,39 +21,39 @@ exports[`genericTypeTransformer should not transform generic types in type liter
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 1`] = `
 Array [
-  T[],
+  TestType[],
 ]
 `;
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 2`] = `
 Array [
-  T = any,
+  TestType = any,
 ]
 `;
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 3`] = `
 Array [
-  T | T,
+  TestType | TestType,
 ]
 `;
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 4`] = `
 Array [
-  T = any,
-  T = object,
+  TestType = any,
+  TestType = object,
 ]
 `;
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 5`] = `
 Array [
-  T & T,
+  TestType & TestType,
 ]
 `;
 
 exports[`genericTypeTransformer should transform generic types from primitive to generic 6`] = `
 Array [
-  T = any,
-  T = object,
+  TestType = any,
+  TestType = object,
 ]
 `;
 

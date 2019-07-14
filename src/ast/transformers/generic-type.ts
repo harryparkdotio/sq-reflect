@@ -2,7 +2,10 @@ import * as ts from 'typescript';
 
 import { isGenericType } from '../generics/types';
 
+import { Transform } from '..';
+
 export const genericTypeTransformer = <T extends ts.Node>(
+  attributeName: string,
   typeParameters: ts.TypeParameterDeclaration[]
 ): ts.TransformerFactory<T> => {
   return (context: ts.TransformationContext) => {
@@ -24,7 +27,9 @@ export const genericTypeTransformer = <T extends ts.Node>(
         if (isGenericType(node)) {
           // FIXME: this won't work if there is more than one type parameter
           // ideally this would have excel style lettering (A --> Z, AA --> AZ, ...)
-          const typeParameterIdentifier = ts.createIdentifier('T');
+          const typeParameterIdentifier = ts.createIdentifier(
+            Transform.interfaceTypeParameterName(`${attributeName}_type`)
+          );
 
           typeParameters.push(
             ts.createTypeParameterDeclaration(

@@ -10,23 +10,14 @@ Array [
     A = "A",
     B = "B"
 },
-  export namespace UserFields {
-    export type id = string;
-    export type default_<T = any> = T;
-    export type metadata<T = object> = T;
-    export type createdAt = Date;
-    export type deletedAt = Date | null;
-    export type type = EnumTypeType[] | null;
-    export type typeType = EnumTypeTypeType;
-},
   export interface User<DefaultType = any, MetadataType = object> {
-    id: UserFields.id;
-    default: UserFields.default_<DefaultType>;
-    metadata: UserFields.metadata<MetadataType>;
-    created_at: UserFields.createdAt;
-    deleted_at: UserFields.deletedAt;
-    type: UserFields.type;
-    type_type: UserFields.typeType;
+    id: string;
+    default: DefaultType;
+    metadata: MetadataType;
+    created_at: Date;
+    deleted_at: Date | null;
+    type: EnumTypeType[] | null;
+    type_type: EnumTypeTypeType;
 },
 ]
 `;
