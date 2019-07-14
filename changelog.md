@@ -1,3 +1,8 @@
+# v2.0.2 / 2019-07-14
+
+- chore(release): v2.0.2
+- fix: bin
+
 # v2.0.1 / 2019-07-14
 
 - chore(release): v2.0.1
