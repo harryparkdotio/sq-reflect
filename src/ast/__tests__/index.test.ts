@@ -1,10 +1,10 @@
-import { buildAst } from '..';
-
 import {
   ClassType,
   ClassDefinition,
   EnumDefinition,
 } from '../../schema/definitions';
+
+import { buildAst } from '..';
 
 describe('buildAst', () => {
   test('should', () => {
