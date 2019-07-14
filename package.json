@@ -5,6 +5,7 @@
   "repository": "git@github.com:harryparkdotio/sq-reflect.git",
   "author": "Harry Park <harry@harrypark.io>",
   "license": "MIT",
+  "bin": "./.bin",
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc -p tsconfig.build.json",
@@ -49,5 +50,17 @@
       "eslint",
       "git add"
     ]
-  }
+  },
+  "keywords": [
+    "typescript",
+    "ts",
+    "postgresql",
+    "postgres",
+    "pg",
+    "sql",
+    "generate",
+    "types",
+    "database",
+    "db"
+  ]
 }
