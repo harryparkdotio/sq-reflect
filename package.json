@@ -6,6 +6,10 @@
   "author": "Harry Park <harry@harrypark.io>",
   "license": "MIT",
   "bin": "./.bin",
+  "files": [
+    ".bin",
+    "dist"
+  ],
   "scripts": {
     "prebuild": "rm -rf dist",
     "build": "tsc -p tsconfig.build.json",
