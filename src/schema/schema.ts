@@ -47,10 +47,7 @@ export const getClasses = async (
       classes.type,
       classes.namespace_id,
       classes.namespace,
-      (
-        SELECT json_agg(value ORDER BY value->>'number' ASC)
-        FROM json_array_elements(classes.attributes)
-      ) "attributes"
+      classes.attributes
     FROM (
       SELECT
         c.oid::INT "id",
