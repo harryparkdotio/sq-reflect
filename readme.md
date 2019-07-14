@@ -2,6 +2,20 @@
 
 postgres typescript type generator
 
+### install
+
+```bash
+$ npm i --save-dev sq-reflect
+# or
+$ yarn add -D sq-reflect
+```
+
+### usage
+
+```bash
+$ sq-reflect --conn postgres://postgres@localhost:5432/db_name --file schema.ts
+```
+
 ### example
 
 **`schema.sql`**
