@@ -34,7 +34,9 @@ const types = {
   ...arrayTypes,
 };
 
-const oidMap: { [oid: number]: ts.TypeNode } = {
+export type OidMap = { [oid: number]: ts.TypeNode };
+
+export const oidMap: Readonly<OidMap> = {
   16: types.Boolean, // bool
   17: types.Buffer, // bytea
   18: types.String, // char
@@ -139,14 +141,7 @@ const oidMap: { [oid: number]: ts.TypeNode } = {
   3807: types.ObjectArray, // _jsonb
 };
 
-export const getTypeFromOid = (oid: number): ts.TypeNode | null => {
-  return oidMap[oid] || null;
-};
+export type TypeGetterFn = (oid: number) => ts.TypeNode | null;
 
-export const addTypeByOid = (oid: number, node: ts.TypeNode) => {
-  if (oidMap[oid]) {
-    throw new Error('type already exists!');
-  }
-
-  oidMap[oid] = node;
-};
+export const typeGetterFn = (...customOidMaps: OidMap[]): TypeGetterFn => oid =>
+  Object.assign(oidMap, ...customOidMaps)[oid] || null;

@@ -4,6 +4,7 @@ module.exports = {
     'src/**/*.ts',
     '!src/**/__tests__/**/*.spec.ts',
     '!src/**/__mocks__/**/*.ts',
+    '!src/cli.ts',
   ],
   coverageReporters: ['lcov', 'text-summary'],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],

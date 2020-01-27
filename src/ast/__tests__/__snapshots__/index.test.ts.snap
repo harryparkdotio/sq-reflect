@@ -21,3 +21,100 @@ Array [
 },
 ]
 `;
+
+exports[`buildAttribute should return generic interface property declaration 1`] = `
+Array [
+  Array [
+    IdType = object,
+  ],
+  id: IdType;,
+]
+`;
+
+exports[`buildAttribute should return interface property declaration 1`] = `
+Array [
+  Array [],
+  id: string;,
+]
+`;
+
+exports[`buildAttribute should return nullable generic interface property declaration 1`] = `
+Array [
+  Array [
+    IdType = object,
+  ],
+  id: IdType | null;,
+]
+`;
+
+exports[`buildAttribute should return nullable interface property declaration 1`] = `
+Array [
+  Array [],
+  id: string | null;,
+]
+`;
+
+exports[`buildClass should return interface declaration 1`] = `
+export interface User {
+    id: string;
+    default: string;
+    metadata: string;
+    created_at: string;
+    deleted_at: string | null;
+    type: string | null;
+    type_type: string;
+}
+`;
+
+exports[`buildEnum should return enum declaration 1`] = `
+export enum EnumTypeTypeType {
+    C = "C",
+    D = "D"
+}
+`;
+
+exports[`buildEnum should return enum declaration 2`] = `
+Object {
+  "99999": EnumTypeTypeType,
+}
+`;
+
+exports[`buildEnum should return enum declaration with array declaration 1`] = `
+export enum EnumTypeTypeType {
+    C = "C",
+    D = "D"
+}
+`;
+
+exports[`buildEnum should return enum declaration with array declaration 2`] = `
+Object {
+  "100000": EnumTypeTypeType[],
+  "99999": EnumTypeTypeType,
+}
+`;
+
+exports[`getTypeFromAttribute should return any | null when type unknown but nullable 1`] = `
+Array [
+  any,
+  null,
+]
+`;
+
+exports[`getTypeFromAttribute should return any when type unknown 1`] = `
+Array [
+  any,
+]
+`;
+
+exports[`getTypeFromAttribute should return correct nullable type 1`] = `
+Array [
+  string,
+  null,
+]
+`;
+
+exports[`getTypeFromAttribute should return correct type 1`] = `
+Array [
+  string,
+]
+`;

@@ -2,11 +2,29 @@ import * as pg from 'pg';
 
 import { EnumDefinition, ClassDefinition } from './definitions';
 
+const sql = (literals: TemplateStringsArray, ...placeholders: []) => {
+  // istanbul ignore next
+  if (placeholders.length !== 0) {
+    throw new Error(
+      'using template literals could lead to sql injection. use parameters instead.'
+    );
+  }
+
+  // istanbul ignore next
+  if (literals.length !== 1) {
+    throw new Error('no literals provided.');
+  }
+
+  const [string] = literals;
+
+  return string;
+};
+
 export const getEnums = async (
   client: pg.Client,
   schema: string = 'public'
 ): Promise<EnumDefinition[]> => {
-  const queryText = `
+  const queryText = sql`
     SELECT
       t.oid::INT "id",
       t.typname "name",
@@ -40,7 +58,7 @@ export const getClasses = async (
   client: pg.Client,
   schema: string = 'public'
 ): Promise<ClassDefinition[]> => {
-  const queryText = `
+  const queryText = sql`
     SELECT
       classes.id,
       classes.name,
