@@ -7,14 +7,14 @@ import {
 } from '../../src/schema/definitions';
 
 describe('getEnums', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await client.query(`
       CREATE TYPE enum_abc_status AS ENUM ('PENDING', 'COMPLETED', 'STARTED', 'READY', 'DONE', 'STOPPED', 'PAUSED', 'PARTIALLY_COMPLETE');
       CREATE TYPE enum_def_color AS ENUM ('BLUE', 'RED', 'GREEN', 'ORANGE', 'YELLOW');
     `);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await client.query(`
       DROP TYPE IF EXISTS enum_abc_status;
       DROP TYPE IF EXISTS enum_def_color;
@@ -64,7 +64,7 @@ describe('getEnums', () => {
 });
 
 describe('getClasses', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await client.query(`
       CREATE VIEW "some_data" AS (
         SELECT
@@ -82,7 +82,7 @@ describe('getClasses', () => {
     `);
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await client.query(`
       DROP TABLE IF EXISTS "user";
       DROP VIEW IF EXISTS "some_data";

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration should return type declarations 1`] = `
+"export enum EnumAbcColor {
+    PENDING = \\"PENDING\\",
+    COMPLETED = \\"COMPLETED\\",
+    STARTED = \\"STARTED\\",
+    READY = \\"READY\\",
+    DONE = \\"DONE\\",
+    STOPPED = \\"STOPPED\\",
+    PAUSED = \\"PAUSED\\",
+    PARTIALLY_COMPLETE = \\"PARTIALLY_COMPLETE\\"
+}
+
+export enum EnumDefStatus {
+    BLUE = \\"BLUE\\",
+    RED = \\"RED\\",
+    GREEN = \\"GREEN\\",
+    ORANGE = \\"ORANGE\\",
+    YELLOW = \\"YELLOW\\"
+}
+
+export interface NotUser<MetadataType = object> {
+    id: string;
+    metadata: MetadataType;
+    def_status: EnumDefStatus | null;
+    created_at: Date;
+    deleted_at: Date | null;
+}
+
+export interface SomeData_2<AnObjectType = object> {
+    a_number: number | null;
+    a_letter: string | null;
+    an_object: AnObjectType | null;
+}"
+`;
